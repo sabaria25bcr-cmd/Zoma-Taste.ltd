@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZomaTaste | Payment</title>
+  <style>
+    * { box-sizing: border-box; font-family: "Poppins", sans-serif; }
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #fff5f5, #ffecec);
+      overflow-x: hidden;
+      animation: fadeIn 1s ease-in;
+    }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 15px 40px; background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      position: sticky; top: 0; z-index: 10; animation: slideDown 0.8s ease-out;
+    }
+    header h1 { color: #e63946; font-weight: 700; }
+    nav a {
+      text-decoration: none; margin: 0 15px; color: #333;
+      font-weight: 600; position: relative;
+    }
+    nav a::after {
+      content: ''; position: absolute; bottom: -5px; left: 0;
+      width: 0%; height: 2px; background-color: #e63946; transition: width 0.3s;
+    }
+    nav a:hover::after { width: 100%; }
+
+    .payment-container {
+      max-width: 500px; margin: 80px auto; background: white; border-radius: 20px;
+      padding: 40px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      text-align: center; animation: floatUp 1s ease-in-out;
+    }
+
+    .payment-container h2 {
+      color: #e63946; font-size: 26px; margin-bottom: 20px;
+    }
+
+    .payment-options { margin: 25px 0; text-align: left; }
+    .option {
+      display: flex; align-items: center; background: #fff7f7; border-radius: 12px;
+      padding: 12px 15px; margin-bottom: 10px; cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s; border: 2px solid transparent;
+    }
+    .option:hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(255, 75, 75, 0.2); }
+    .option.selected { border: 2px solid #e63946; background: #fff0f0; }
+    .option input { margin-right: 10px; transform: scale(1.3); }
+
+    .gpay-section {
+      display: none; margin-top: 15px; text-align: center; animation: fadeIn 0.8s ease;
+    }
+    .gpay-section img {
+      width: 220px; border-radius: 10px; margin-top: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    .amount-display {
+      font-size: 18px; color: #333; font-weight: 600; margin-top: 10px;
+    }
+
+    .pay-btn {
+      width: 100%; background: linear-gradient(135deg, #ff4b4b, #ff7676);
+      color: white; font-size: 17px; border: none; border-radius: 30px;
+      padding: 14px; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s;
+      margin-top: 15px; font-weight: 600; letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(255, 75, 75, 0.3);
+    }
+    .pay-btn:hover {
+      transform: scale(1.05); background: linear-gradient(135deg, #e63946, #ff4b4b);
+      box-shadow: 0 6px 15px rgba(255, 75, 75, 0.4);
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 18px;
+      text-decoration: none;
+      color: #555;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      color: #e63946;
+      transform: translateX(-3px);
+    }
+
+    footer { text-align: center; margin: 40px 0 20px; color: #666; font-size: 14px; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes floatUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ZT | ZomaTaste</h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="payment-container">
+    <h2>Choose Your Payment Method 💳</h2>
+
+    <div class="payment-options">
+      <div class="option" id="optionGPay">
+        <input type="radio" name="payment" value="gpay"> Google Pay (QR Code)
+      </div>
+      <div class="option" id="optionCOD">
+        <input type="radio" name="payment" value="cod"> Cash on Delivery
+      </div>
+    </div>
+
+    <!-- GPay QR Section -->
+    <div class="gpay-section" id="gpaySection">
+      <p>📱 Scan to Pay via Google Pay</p>
+      <img src="GooglePay_QR.png" alt="GPay QR">
+      <p class="amount-display" id="amountDisplay"></p>
+    </div>
+
+    <button class="pay-btn" id="payButton">Proceed to Pay 💰</button>
+
+    <a href="address.html" class="back-btn">← Back to Address</a>
+  </div>
+
+  <footer>© 2025 ZomaTaste — Deliciously Animated 🍽️</footer>
+
+  <script>
+    const gpaySection = document.getElementById('gpaySection');
+    const amountDisplay = document.getElementById('amountDisplay');
+    const payButton = document.getElementById('payButton');
+    const optionGPay = document.getElementById('optionGPay');
+    const optionCOD = document.getElementById('optionCOD');
+    let selected = "";
+
+    // ✅ Get checkout amount (from localStorage or default)
+    let amount = localStorage.getItem("checkoutAmount") || 499.00;
+    amount = parseFloat(amount).toFixed(2);
+
+    optionGPay.addEventListener("click", () => {
+      selected = "gpay";
+      optionGPay.classList.add("selected");
+      optionCOD.classList.remove("selected");
+      gpaySection.style.display = "block";
+    
+    });
+
+    optionCOD.addEventListener("click", () => {
+      selected = "cod";
+      optionCOD.classList.add("selected");
+      optionGPay.classList.remove("selected");
+      gpaySection.style.display = "none";
+    });
+
+    payButton.addEventListener("click", () => {
+      if (!selected) {
+        alert("⚠️ Please select a payment method.");
+        return;
+      }
+
+      payButton.disabled = true;
+      payButton.textContent = "Processing...";
+
+      setTimeout(() => {
+        window.location.href = "success.html";
+      }, 2000);
+    });
+  </script>
+</body>
+</html>

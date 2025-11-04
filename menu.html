@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZomaTaste | Menu</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff7f7;
+      color: #333;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      color: #e63946;
+    }
+
+    nav a {
+      text-decoration: none;
+      margin: 0 15px;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #e63946;
+    }
+
+    .menu-section {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .menu-section h2 {
+      color: #e63946;
+      font-size: 28px;
+    }
+
+    .menu-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .menu-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      width: 220px;
+      text-align: center;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .menu-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .menu-card h3 {
+      margin: 10px 0 5px;
+      color: #333;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #e63946;
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+
+    .menu-card p {
+      font-size: 14px;
+      color: #666;
+      padding: 0 10px;
+    }
+
+    .menu-card button {
+      background-color: #ff4b4b;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 15px;
+      margin: 15px 0;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      font-weight: 600;
+    }
+
+    .menu-card button:hover {
+      background-color: #e63946;
+      transform: scale(1.05);
+    }
+
+    .menu-card button.added {
+      background-color: #28a745 !important;
+      color: white;
+      cursor: default;
+      transform: none;
+    }
+
+    .cart-footer {
+      display: flex;
+      justify-content: flex-end;
+      padding: 20px 40px;
+      background: #fff;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      bottom: 0;
+    }
+
+    .cart-footer button {
+      background-color: #ff4b4b;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 0.3s;
+    }
+
+    .cart-footer button:hover {
+      background-color: #e63946;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ZT | ZomaTaste</h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="location.html">Cart</a>
+    </nav>
+  </header>
+
+  <section class="menu-section">
+    <h2>Our 30 Delicious Dishes</h2>
+    <p>From South Indian classics to world favorites — enjoy them all!</p>
+
+    <div class="menu-container">
+      <!-- South Indian -->
+      <div class="menu-card"><img src="1.jpg"><h3>Chicken Biryani</h3><div class="price">₹180</div><p>Spicy and flavorful biryani served with raita.</p><button onclick="addToCart(this,'Chicken Biryani',180,'1.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="2.jpg"><h3>Masala Dosa</h3><div class="price">₹90</div><p>Golden crispy dosa filled with spiced potato.</p><button onclick="addToCart(this,'Masala Dosa',90,'2.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="3.jpg"><h3>Idli Sambar</h3><div class="price">₹70</div><p>Soft idlis served with hot sambar and chutney.</p><button onclick="addToCart(this,'Idli Sambar',70,'3.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="4.jpg"><h3>Butter Chicken</h3><div class="price">₹220</div><p>Creamy tomato gravy with tender chicken pieces.</p><button onclick="addToCart(this,'Butter Chicken',220,'4.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="5.jpg"><h3>Veg Pulao</h3><div class="price">₹130</div><p>Fragrant rice cooked with mixed vegetables.</p><button onclick="addToCart(this,'Veg Pulao',130,'5.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="6.jpg"><h3>Paneer Butter Masala</h3><div class="price">₹190</div><p>Soft paneer cubes in rich creamy gravy.</p><button onclick="addToCart(this,'Paneer Butter Masala',190,'6.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="7.jpg"><h3>Mutton Curry</h3><div class="price">₹250</div><p>Spicy, rich mutton curry with bold flavors.</p><button onclick="addToCart(this,'Mutton Curry',250,'7.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="8.jpg"><h3>Parotta with Salna</h3><div class="price">₹100</div><p>Flaky parotta served with spicy curry.</p><button onclick="addToCart(this,'Parotta with Salna',100,'8.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="9.jpg"><h3>Veg Kurma</h3><div class="price">₹120</div><p>Vegetable curry in coconut-based sauce.</p><button onclick="addToCart(this,'Veg Kurma',120,'9.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="10.jpg"><h3>Chicken 65</h3><div class="price">₹160</div><p>Deep-fried chicken with spicy flavor.</p><button onclick="addToCart(this,'Chicken 65',160,'10.jpg')">Add to Cart</button></div>
+
+      <!-- Chinese -->
+      <div class="menu-card"><img src="11.jpg"><h3>Fried Rice</h3><div class="price">₹120</div><p>Classic Chinese rice stir-fried with veggies.</p><button onclick="addToCart(this,'Fried Rice',120,'11.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="12.jpg"><h3>Hakka Noodles</h3><div class="price">₹130</div><p>Soft noodles tossed with vegetables and sauces.</p><button onclick="addToCart(this,'Hakka Noodles',130,'12.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="13.jpg"><h3>Manchurian</h3><div class="price">₹140</div><p>Vegetable balls cooked in tangy sauce.</p><button onclick="addToCart(this,'Manchurian',140,'13.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="14.jpg"><h3>Chilli Chicken</h3><div class="price">₹200</div><p>Hot and spicy boneless chicken with sauce.</p><button onclick="addToCart(this,'Chilli Chicken',200,'14.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="15.jpg"><h3>Chicken Lollipop</h3><div class="price">₹160</div><p>Deep-fried chicken wings with masala coating.</p><button onclick="addToCart(this,'Chicken Lollipop',160,'15.jpg')">Add to Cart</button></div>
+
+      <!-- Fast Food -->
+      <div class="menu-card"><img src="16.jpg"><h3>Burger</h3><div class="price">₹100</div><p>Cheesy and juicy grilled burger.</p><button onclick="addToCart(this,'Burger',100,'16.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="17.jpg"><h3>Pizza</h3><div class="price">₹150</div><p>Loaded cheese pizza with toppings of your choice.</p><button onclick="addToCart(this,'Pizza',150,'17.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="18.jpg"><h3>French Fries</h3><div class="price">₹80</div><p>Crispy golden fries sprinkled with salt.</p><button onclick="addToCart(this,'French Fries',80,'18.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="19.jpg"><h3>Sandwich</h3><div class="price">₹90</div><p>Grilled sandwich with cheese and veggies.</p><button onclick="addToCart(this,'Sandwich',90,'19.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="20.jpg"><h3>Hot Dog</h3><div class="price">₹110</div><p>Soft bun with sausage, sauce and toppings.</p><button onclick="addToCart(this,'Hot Dog',110,'20.jpg')">Add to Cart</button></div>
+
+      <!-- Desserts -->
+      <div class="menu-card"><img src="21.jpg"><h3>Choco Lava Cake</h3><div class="price">₹100</div><p>Molten chocolate-filled dessert.</p><button onclick="addToCart(this,'Choco Lava Cake',100,'21.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="22.jpg"><h3>Ice Cream</h3><div class="price">₹70</div><p>Creamy scoops in your favorite flavor.</p><button onclick="addToCart(this,'Ice Cream',70,'22.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="23.jpg"><h3>Fruit Salad</h3><div class="price">₹90</div><p>Fresh seasonal fruits with honey drizzle.</p><button onclick="addToCart(this,'Fruit Salad',90,'23.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="24.jpg"><h3>Falooda</h3><div class="price">₹130</div><p>Sweet dessert with ice cream, jelly, and milk.</p><button onclick="addToCart(this,'Falooda',130,'24.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="25.jpg"><h3>Gulab Jamun</h3><div class="price">₹100</div><p>Soft, syrupy Indian sweet balls.</p><button onclick="addToCart(this,'Gulab Jamun',100,'25.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="26.jpg"><h3>Brownie</h3><div class="price">₹120</div><p>Rich chocolate brownie with fudge.</p><button onclick="addToCart(this,'Brownie',120,'26.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="27.jpg"><h3>Milkshake</h3><div class="price">₹100</div><p>Cold creamy shake in different flavors.</p><button onclick="addToCart(this,'Milkshake',100,'27.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="28.jpg"><h3>Donut</h3><div class="price">₹80</div><p>Soft donut topped with chocolate glaze.</p><button onclick="addToCart(this,'Donut',80,'28.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="29.jpg"><h3>Waffles</h3><div class="price">₹110</div><p>Crispy waffles served with maple syrup.</p><button onclick="addToCart(this,'Waffles',110,'29.jpg')">Add to Cart</button></div>
+      <div class="menu-card"><img src="30.jpg"><h3>Pastry</h3><div class="price">₹90</div><p>Delicious and soft cream-filled pastry.</p><button onclick="addToCart(this,'Pastry',90,'30.jpg')">Add to Cart</button></div>
+    </div>
+  </section>
+
+  <div class="cart-footer">
+    <button onclick="goToLocation()">Proceed to Cart</button>
+  </div>
+
+  <script>
+    function addToCart(button, name, price, img) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      if (cart.find(item => item.name === name)) {
+        button.classList.add("added");
+        button.innerHTML = "✔ Added";
+        return;
+      }
+
+      cart.push({ name, price, img });
+      localStorage.setItem('cart', JSON.stringify(cart));
+
+      button.classList.add("added");
+      button.innerHTML = "✔ Added";
+    }
+
+    function goToLocation() {
+      window.location.href = "location.html";
+    }
+  </script>
+</body>
+</html>

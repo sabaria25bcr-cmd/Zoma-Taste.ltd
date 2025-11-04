@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZomaTaste | Contact Us</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: url('c.png') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* background blur overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(6px);
+      z-index: -1;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 50px;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #ff3b30;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover,
+    nav a[href='contact.html'] {
+      color: #ff3b30;
+    }
+
+    /* floating decorative food graphics */
+    .decor {
+      position: absolute;
+      width: 100px;
+      opacity: 0.12;
+      animation: float 6s ease-in-out infinite;
+    }
+    .decor1 { top: 10%; left: 5%; animation-delay: 0s; }
+    .decor2 { top: 75%; right: 8%; animation-delay: 2s; }
+    .decor3 { bottom: 10%; left: 40%; animation-delay: 4s; }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* contact form section */
+    .contact {
+      text-align: center;
+      padding: 80px 20px;
+      max-width: 700px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact h1 {
+      color: #ff3b30;
+      font-size: 2.4em;
+      margin-bottom: 10px;
+    }
+
+    .contact p {
+      color: #555;
+      font-size: 1.1em;
+      margin-bottom: 35px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      text-align: left;
+    }
+
+    input, textarea {
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #ff3b30;
+      box-shadow: 0 0 10px rgba(255, 59, 48, 0.3);
+    }
+
+    button {
+      background: linear-gradient(135deg, #ff3b30, #ff6b5b);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #ff6b5b, #ff3b30);
+    }
+
+    /* contact icons */
+    .contact-icons {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .contact-icons img {
+      width: 50px;
+      height: 50px;
+      transition: transform 0.3s, filter 0.3s;
+      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.2));
+    }
+
+    .contact-icons img:hover {
+      transform: scale(1.2) rotate(10deg);
+      filter: brightness(1.2);
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #666;
+      font-size: 14px;
+      background: rgba(255,255,255,0.95);
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">ZT | ZomaTaste</div>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="location.html">Cart</a>
+    </nav>
+  </header>
+
+  <!-- floating graphics -->
+  <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png" class="decor decor1" alt="pizza">
+  <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" class="decor decor2" alt="burger">
+  <img src="https://cdn-icons-png.flaticon.com/512/1046/1046787.png" class="decor decor3" alt="noodles">
+
+  <section class="contact">
+    <h1>Contact Us</h1>
+    <p>Have questions or feedback? Drop us a message below!</p>
+
+    <form onsubmit="alert('Message sent!'); return false;">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" rows="4" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+
+    <div class="contact-icons">
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384005.png" alt="Facebook"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384015.png" alt="Instagram"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384017.png" alt="Twitter"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384012.png" alt="YouTube"></a>
+    </div>
+  </section>
+
+  <footer>© 2025 ZomaTaste — Deliciously Connected.</footer>
+</body>
+</html>

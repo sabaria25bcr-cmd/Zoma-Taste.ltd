@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | ZomaTaste</title>
+  <style>
+    /* GENERAL */
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #fff8f7, #ffe9e6);
+      color: #333;
+      overflow-x: hidden;
+      font-size: 18px; /* Base font size increased */
+    }
+
+    /* HEADER */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 60px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      animation: fadeInDown 1s ease;
+    }
+
+    .logo h2 {
+      color: #ff2b2b;
+      font-weight: 700;
+      font-size: 28px;
+      margin: 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      font-size: 18px;
+      transition: color 0.3s, transform 0.3s;
+    }
+
+    nav ul li a:hover, nav ul li a.active {
+      color: #ff2b2b;
+      transform: scale(1.1);
+    }
+
+    .search-bar {
+      background-color: #fff0ef;
+      border-radius: 25px;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-bar input {
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 8px 12px;
+      width: 180px;
+      color: #555;
+      font-size: 16px;
+    }
+
+    .search-bar button {
+      background: #ff2b2b;
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .search-bar button:hover {
+      background: #e01e1e;
+      transform: scale(1.05);
+    }
+
+    /* FLOATING DECORATIVE FOOD ICONS */
+    .decor {
+      position: absolute;
+      width: 90px;
+      opacity: 0.15;
+      animation: float 6s ease-in-out infinite;
+      z-index: 0;
+    }
+    .decor1 { top: 10%; left: 5%; animation-delay: 0s; }
+    .decor2 { bottom: 15%; right: 10%; animation-delay: 2s; }
+    .decor3 { top: 50%; left: 40%; animation-delay: 4s; }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* HERO SECTION */
+    .about-hero {
+      text-align: center;
+      padding: 90px 20px;
+      background: url('c.png') no-repeat center/cover;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 0;
+    }
+
+    .about-hero h1 {
+      position: relative;
+      font-size: 3em;
+      color: #fff;
+      margin-bottom: 15px;
+      animation: fadeInDown 1.2s ease;
+      z-index: 1;
+    }
+
+    .about-hero p {
+      position: relative;
+      font-size: 1.3em;
+      color: #f3f3f3;
+      max-width: 650px;
+      margin: 0 auto;
+      z-index: 1;
+      animation: fadeInUp 1.5s ease;
+      line-height: 1.6;
+    }
+
+    /* ABOUT SECTION */
+    .about-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 80px 50px;
+      gap: 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-text {
+      flex: 1 1 450px;
+      max-width: 550px;
+      animation: slideInLeft 1.5s ease;
+    }
+
+    .about-text h2 {
+      color: #ff2b2b;
+      font-size: 2.2em;
+      margin-bottom: 20px;
+    }
+
+    .about-text p {
+      line-height: 1.8;
+      color: #444;
+      font-size: 1.05em;
+      margin-bottom: 20px;
+    }
+
+    .about-text button {
+      background: linear-gradient(135deg, #ff2b2b, #ff6b5b);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 30px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 16px;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .about-text button:hover {
+      background: linear-gradient(135deg, #ff6b5b, #ff2b2b);
+      transform: scale(1.1);
+    }
+
+    .about-image {
+      flex: 1 1 450px;
+      text-align: center;
+      animation: slideInRight 1.5s ease;
+    }
+
+    .about-image img {
+      width: 95%;
+      max-width: 500px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      transition: transform 0.4s ease;
+    }
+
+    .about-image img:hover {
+      transform: scale(1.05) rotate(2deg);
+    }
+
+    /* FEATURES SECTION */
+    .features {
+      background: white;
+      padding: 90px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .features h2 {
+      color: #ff2b2b;
+      font-size: 2.4em;
+      margin-bottom: 50px;
+      animation: fadeInDown 1s ease;
+    }
+
+    .feature-boxes {
+      display: flex;
+      justify-content: center;
+      gap: 35px;
+      flex-wrap: wrap;
+    }
+
+    .feature {
+      background: #fff5f4;
+      border-radius: 20px;
+      padding: 30px;
+      width: 280px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      animation: fadeInUp 1.5s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+    }
+
+    .feature img {
+      width: 70px;
+      margin-bottom: 20px;
+      transition: transform 0.3s;
+    }
+
+    .feature:hover img {
+      transform: rotate(10deg) scale(1.1);
+    }
+
+    .feature h3 {
+      color: #ff2b2b;
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .feature p {
+      color: #555;
+      font-size: 1.05em;
+      line-height: 1.7;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      background: #fff;
+      padding: 25px;
+      color: #666;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+      margin-top: 60px;
+      font-size: 16px;
+      animation: fadeIn 1s ease;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+    @keyframes fadeInUp { from {opacity: 0; transform: translateY(40px);} to {opacity: 1; transform: translateY(0);} }
+    @keyframes fadeInDown { from {opacity: 0; transform: translateY(-40px);} to {opacity: 1; transform: translateY(0);} }
+    @keyframes slideInLeft { from {opacity: 0; transform: translateX(-60px);} to {opacity: 1; transform: translateX(0);} }
+    @keyframes slideInRight { from {opacity: 0; transform: translateX(60px);} to {opacity: 1; transform: translateX(0);} }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      body { font-size: 16px; }
+      .about-section { flex-direction: column; text-align: center; }
+      .feature-boxes { flex-direction: column; align-items: center; }
+      .about-hero h1 { font-size: 2.2em; }
+      .about-hero p { font-size: 1.1em; }
+      .decor { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FLOATING GRAPHICS -->
+  <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png" class="decor decor1" alt="Pizza" />
+  <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" class="decor decor2" alt="Burger" />
+  <img src="https://cdn-icons-png.flaticon.com/512/1046/1046787.png" class="decor decor3" alt="Noodles" />
+
+  <!-- NAVBAR -->
+  <header>
+    <div class="logo"><h2>ZT | ZomaTaste</h2></div>
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="cart.html">Cart</a></li>
+      </ul>
+    </nav>
+    <div class="search-bar">
+      <input type="text" placeholder="Search dishes..." />
+      <button>Search</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <h1>Welcome to ZomaTaste 🍴</h1>
+    <p>Your favorite online food destination — where taste meets convenience!</p>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section">
+    <div class="about-text">
+      <h2>Who We Are</h2>
+      <p>
+        At <b>ZomaTaste</b>, we bring you the best dishes from top-rated restaurants
+        in your city — hot, fresh, and full of flavor. We’re passionate about making
+        your food ordering experience simple, quick, and satisfying.
+      </p>
+      <p>
+        Whether it’s a cozy dinner at home, a party with friends, or a quick lunch break —
+        we ensure your food arrives fast and fresh, every time.
+      </p>
+      <button onclick="window.location.href='menu.html'">Explore Menu</button>
+    </div>
+    <div class="about-image">
+      <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092" alt="Delicious Food" />
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <h2>Why Choose ZomaTaste?</h2>
+    <div class="feature-boxes">
+      <div class="feature">
+        <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Fast Delivery">
+        <h3>Fast Delivery</h3>
+        <p>Get your favorite dishes delivered within 30 minutes, hot and fresh!</p>
+      </div>
+
+      <div class="feature">
+        <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png" alt="Top Restaurants">
+        <h3>Top Restaurants</h3>
+        <p>Partnered with 1000+ restaurants to bring the best flavors to your doorstep.</p>
+      </div>
+
+      <div class="feature">
+        <img src="https://cdn-icons-png.flaticon.com/512/3523/3523063.png" alt="Easy Ordering">
+        <h3>Easy Ordering</h3>
+        <p>Order in just a few clicks — quick, smooth, and secure checkout process.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2025 ZomaTaste | Deliciously Delivered with ❤️</footer>
+</body>
+</html>
