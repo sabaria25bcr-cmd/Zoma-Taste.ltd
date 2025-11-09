@@ -5,16 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZomaTaste | Contact Us</title>
   <style>
+    /* Page fade-in */
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
       background: url('c.png') no-repeat center center fixed;
       background-size: cover;
-      position: relative;
       overflow-x: hidden;
+      position: relative;
+      animation: pageFade 1.2s ease forwards;
+      opacity: 0;
     }
 
-    /* background blur overlay */
+    @keyframes pageFade {
+      from { opacity: 0; transform: scale(1.02); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
     body::before {
       content: "";
       position: fixed;
@@ -34,6 +41,12 @@
       position: sticky;
       top: 0;
       z-index: 10;
+      animation: slideDown 1.2s ease;
+    }
+
+    @keyframes slideDown {
+      0% { transform: translateY(-80px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
     }
 
     .logo {
@@ -55,45 +68,37 @@
       color: #ff3b30;
     }
 
-    /* floating decorative food graphics */
-    .decor {
-      position: absolute;
-      width: 100px;
-      opacity: 0.12;
-      animation: float 6s ease-in-out infinite;
-    }
-    .decor1 { top: 10%; left: 5%; animation-delay: 0s; }
-    .decor2 { top: 75%; right: 8%; animation-delay: 2s; }
-    .decor3 { bottom: 10%; left: 40%; animation-delay: 4s; }
-
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
-    }
-
-    /* contact form section */
+    /* Contact Section */
     .contact {
       text-align: center;
       padding: 80px 20px;
       max-width: 700px;
       margin: 60px auto;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       position: relative;
       z-index: 1;
+      animation: floatCard 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatCard {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-10px); }
     }
 
     .contact h1 {
       color: #ff3b30;
       font-size: 2.4em;
       margin-bottom: 10px;
+      animation: fadeUp 1s ease;
     }
 
     .contact p {
       color: #555;
       font-size: 1.1em;
       margin-bottom: 35px;
+      animation: fadeUp 1.2s ease;
     }
 
     form {
@@ -110,6 +115,17 @@
       font-size: 15px;
       outline: none;
       transition: 0.3s;
+      opacity: 0;
+      transform: translateX(-50px);
+      animation: slideInput 1s ease forwards;
+    }
+
+    input:nth-child(1) { animation-delay: 0.3s; }
+    input:nth-child(2) { animation-delay: 0.5s; }
+    textarea { animation-delay: 0.7s; }
+
+    @keyframes slideInput {
+      to { opacity: 1; transform: translateX(0); }
     }
 
     input:focus, textarea:focus {
@@ -126,33 +142,80 @@
       font-size: 16px;
       cursor: pointer;
       font-weight: bold;
-      transition: transform 0.2s, background 0.3s;
+      transition: all 0.4s ease;
+      animation: fadeUp 1.2s ease forwards;
+      animation-delay: 0.9s;
+      opacity: 0;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     button:hover {
-      transform: scale(1.05);
+      transform: scale(1.07);
+      box-shadow: 0 0 20px rgba(255, 59, 48, 0.5);
       background: linear-gradient(135deg, #ff6b5b, #ff3b30);
     }
 
-    /* contact icons */
-    .contact-icons {
+    /* --- Horizontal Step Animation (from previous version) --- */
+    .social-step-container {
       display: flex;
       justify-content: center;
-      gap: 30px;
-      margin-top: 50px;
+      align-items: center;
+      gap: 25px;
+      flex-wrap: wrap;
+      margin: 80px auto;
+      transform: rotateX(15deg) rotateY(-15deg);
+      perspective: 1200px;
     }
 
-    .contact-icons img {
-      width: 50px;
-      height: 50px;
-      transition: transform 0.3s, filter 0.3s;
-      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.2));
+    .social-step {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px 30px;
+      color: #fff;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      position: relative;
+      box-shadow: 0 12px 0 rgba(0,0,0,0.25);
+      transform: translateY(80px) translateZ(-60px) scale(0.8);
+      opacity: 0;
+      animation: stepIn 0.8s ease forwards;
+      text-decoration: none;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    .contact-icons img:hover {
-      transform: scale(1.2) rotate(10deg);
-      filter: brightness(1.2);
+    @keyframes stepIn {
+      0% { transform: translateY(80px) translateZ(-60px) scale(0.8); opacity: 0; }
+      100% { transform: translateY(0) translateZ(0) scale(1); opacity: 1; }
     }
+
+    .social-step:nth-child(1) { animation-delay: 0.2s; }
+    .social-step:nth-child(2) { animation-delay: 0.4s; }
+    .social-step:nth-child(3) { animation-delay: 0.6s; }
+    .social-step:nth-child(4) { animation-delay: 0.8s; }
+    .social-step:nth-child(5) { animation-delay: 1.0s; }
+
+    .social-step:hover {
+      transform: translateY(-10px) translateZ(15px) scale(1.05);
+      box-shadow: 0 20px 15px rgba(0,0,0,0.3);
+    }
+
+    .social-step i {
+      font-size: 22px;
+    }
+
+    /* Gradient Colors */
+    .facebook { background: linear-gradient(135deg, #1877f2, #3b5998); }
+    .twitter { background: linear-gradient(135deg, #000000, #434343); }
+    .youtube { background: linear-gradient(135deg, #ff0000, #cc0000); }
+    .instagram { background: linear-gradient(135deg, #feda75, #d62976, #962fbf, #4f5bd5); }
+    .linkedin { background: linear-gradient(135deg, #0a66c2, #004182); }
 
     footer {
       text-align: center;
@@ -161,8 +224,17 @@
       font-size: 14px;
       background: rgba(255,255,255,0.95);
       margin-top: 60px;
+      animation: fadeUp 1.5s ease;
+    }
+
+    @media (max-width: 700px) {
+      .social-step { flex: 1 1 45%; }
+    }
+    @media (max-width: 500px) {
+      .social-step { flex: 1 1 90%; }
     }
   </style>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <header>
@@ -175,11 +247,6 @@
     </nav>
   </header>
 
-  <!-- floating graphics -->
-  <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png" class="decor decor1" alt="pizza">
-  <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" class="decor decor2" alt="burger">
-  <img src="https://cdn-icons-png.flaticon.com/512/1046/1046787.png" class="decor decor3" alt="noodles">
-
   <section class="contact">
     <h1>Contact Us</h1>
     <p>Have questions or feedback? Drop us a message below!</p>
@@ -190,15 +257,18 @@
       <textarea placeholder="Your Message" rows="4" required></textarea>
       <button type="submit">Send Message</button>
     </form>
-
-    <div class="contact-icons">
-      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384005.png" alt="Facebook"></a>
-      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384015.png" alt="Instagram"></a>
-      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384017.png" alt="Twitter"></a>
-      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384012.png" alt="YouTube"></a>
-    </div>
   </section>
+
+  <!-- Horizontal 3D Social Animation with Links -->
+  <div class="social-step-container">
+    <a href="https://www.facebook.com/zomato" target="_blank" class="social-step facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+    <a href="https://x.com/zomato" target="_blank" class="social-step twitter"><i class="fab fa-x-twitter"></i> Twitter</a>
+    <a href="https://www.youtube.com/user/zomato" target="_blank" class="social-step youtube"><i class="fab fa-youtube"></i> YouTube</a>
+    <a href="https://www.instagram.com/zomato/" target="_blank" class="social-step instagram"><i class="fab fa-instagram"></i> Instagram</a>
+    <a href="https://www.linkedin.com/company/zomato" target="_blank" class="social-step linkedin"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+  </div>
 
   <footer>© 2025 ZomaTaste — Deliciously Connected.</footer>
 </body>
 </html>
+sss

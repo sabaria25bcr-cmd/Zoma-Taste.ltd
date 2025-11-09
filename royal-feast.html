@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZomaTaste Royal Feast</title>
+<style>
+  :root { --brand:#e63946; --accent:#ff6b6b; }
+  * { box-sizing:border-box; scroll-behavior:smooth; }
+  body { font-family:'Poppins',Arial,sans-serif; margin:0; background:#fff7f7; color:#222; }
+
+  header {
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 22px;background:#fff;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+    position:sticky;top:0;z-index:100;
+  }
+  .logo { color:var(--brand);font-weight:800;font-size:20px; }
+  nav a { margin-left:14px;text-decoration:none;color:#333;font-weight:600;transition:color .2s ease; }
+  nav a:hover { color:var(--brand); }
+
+  .hero {
+    max-width:1100px;margin:25px auto;background:#fff;border-radius:16px;overflow:hidden;
+    box-shadow:0 10px 35px rgba(0,0,0,0.08);
+  }
+  .hero img { width:100%;height:420px;object-fit:cover;border-bottom:4px solid var(--brand); }
+
+  .content { padding:26px 30px 40px; }
+  h1 { color:var(--brand);margin:0;font-size:32px; }
+  p.lead { color:#555;line-height:1.6;margin-top:10px;font-size:16px; }
+
+  .grid { display:grid;grid-template-columns:1fr 320px;gap:20px;margin-top:24px; }
+
+  .card {
+    background:#fff;border-radius:14px;padding:18px 20px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.05);
+    transition:all 0.3s ease;
+  }
+  .card:hover { transform:translateY(-3px);box-shadow:0 8px 25px rgba(230,57,70,0.1); }
+
+  /* Royal Platters Gallery */
+  .dish-gallery {
+    margin-top:25px;background:#fff5f5;border-radius:14px;padding:18px;
+    box-shadow:0 4px 12px rgba(230,57,70,0.1);
+    animation:fadeIn 0.8s ease-in-out;
+  }
+  .dish-gallery h3 { color:var(--brand);text-align:center;margin-bottom:12px; }
+  .dish-row { display:flex;gap:14px;justify-content:center;flex-wrap:wrap; }
+  .dish {
+    background:#fff;border-radius:12px;overflow:hidden;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
+    width:180px;text-align:center;
+    transition:transform .3s ease,box-shadow .3s ease;
+  }
+  .dish:hover { transform:scale(1.05);box-shadow:0 6px 18px rgba(230,57,70,0.2); }
+  .dish img { width:100%;height:120px;object-fit:cover; }
+  .dish p { margin:8px 0;color:#333;font-weight:600;font-size:14px; }
+
+  .reviews .review {
+    background:#fff5f5;padding:12px;border-radius:10px;margin-bottom:12px;
+    box-shadow:0 4px 10px rgba(230,57,70,0.05);
+  }
+
+  .btn {
+    display:inline-block;
+    background:linear-gradient(135deg,var(--brand),var(--accent));
+    color:#fff;padding:10px 16px;border-radius:10px;
+    text-decoration:none;font-weight:700;transition:all .3s ease;
+  }
+  .btn:hover { transform:translateY(-2px);box-shadow:0 6px 14px rgba(230,57,70,0.3); }
+
+  footer { text-align:center;font-size:14px;color:#777;margin:40px 0 10px; }
+
+  @keyframes fadeIn { from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);} }
+
+  @media(max-width:980px){ .grid{grid-template-columns:1fr} .hero img{height:260px} }
+</style>
+</head>
+<body>
+<header>
+  <div style="display:flex;gap:12px;align-items:center">
+    <div class="logo">ZT | ZomaTaste</div>
+    <nav><a href="index.html">Home</a><a href="menu.html">Menu</a></nav>
+  </div>
+  <div style="color:#777">Royal Feast</div>
+</header>
+
+<main class="hero">
+  <img src="https://images.unsplash.com/photo-1592861956120-e524fc739696?auto=format&fit=crop&w=1200&q=80" alt="Royal Feast">
+  <div class="content">
+    <h1>ZomaTaste Royal Feast</h1>
+    <p class="lead">Grand platters and celebratory banquets — ideal for large gatherings, weddings, and festive events. Experience royal hospitality at its finest.</p>
+
+    <div class="grid">
+      <section>
+        <div class="card">
+          <h3>Highlights</h3>
+          <ul>
+            <li>Party platters (veg & non-veg)</li>
+            <li>Custom catering menus</li>
+            <li>Event coordination support</li>
+          </ul>
+          <div style="margin-top:12px"><a class="btn" href="contact.html">Enquire Catering</a></div>
+        </div>
+
+        <!-- Added Royal Platters Gallery -->
+        <div class="dish-gallery">
+          <h3>Royal Platters</h3>
+          <div class="dish-row">
+            <div class="dish">
+              <img src="022.jpg" alt="Royal Biryani">
+              <p>🍛 Royal Biryani Feast</p>
+            </div>
+            <div class="dish">
+              <img src="023.jpg" alt="Grand Thali">
+              <p>🥘 Grand Maharaja Thali</p>
+            </div>
+            <div class="dish">
+              <img src="024.jpg" alt="Sweets">
+              <p>🍰 Festival Sweet Box</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside>
+        <div class="card">
+          <h3>Customer Feedback</h3>
+          <div class="reviews">
+            <div class="review"><p>"We booked a wedding package — food quality and service were outstanding."</p><strong>– Raj & Family</strong></div>
+            <div class="review"><p>"Excellent organization and generous portions."</p><strong>– Sunita P.</strong></div>
+            <div class="review"><p>"Guests loved the variety and flavors."</p><strong>– Amit C.</strong></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:12px"><h3>Details</h3><p>📍 Mumbai<br>⏰ Event-based catering<br>📞 +91 98765 44332</p></div>
+      </aside>
+    </div>
+
+    <a class="btn" href="index.html" style="background:#fff;color:var(--brand);border:2px solid var(--brand);margin-top:20px;">⬅ Back to Restaurants</a>
+  </div>
+</main>
+
+<footer>© 2025 ZomaTaste — Dine Like Royalty 👑</footer>
+</body>
+</html>

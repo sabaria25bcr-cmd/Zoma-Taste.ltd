@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZomaTaste | OTP Verification</title>
+  <style>
+    :root {
+      --brand: #e63946;
+      --accent: #ff6b6b;
+      --bg: linear-gradient(135deg, #fff5f5, #ffecec);
+      --shadow: 0 8px 25px rgba(230, 57, 70, 0.15);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 40px;
+      background: rgba(255,255,255,0.96);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    header h1 { color: var(--brand); font-weight: 700; letter-spacing: 1px; }
+
+    nav a {
+      text-decoration: none;
+      margin: 0 15px;
+      color: #333;
+      font-weight: 500;
+      position: relative;
+      transition: 0.3s;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--brand);
+      transition: width 0.3s;
+    }
+
+    nav a:hover { color: var(--brand); transform: scale(1.05); }
+    nav a:hover::after { width: 100%; }
+
+    .container {
+      max-width: 500px;
+      margin: 60px auto;
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      animation: fadeIn 1.5s ease;
+      text-align: center;
+    }
+
+    h2 {
+      color: var(--brand);
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .phone-input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      transition: 0.3s;
+    }
+
+    .phone-input:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 10px rgba(230,57,70,0.15);
+      outline: none;
+    }
+
+    .otp-inputs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .otp-input {
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+
+    .otp-input:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 10px rgba(230,57,70,0.15);
+      outline: none;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--brand), var(--accent));
+      color: #fff;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 16px;
+      transition: transform 0.3s;
+      box-shadow: 0 4px 15px rgba(255, 90, 90, 0.4);
+      margin: 10px 5px;
+      width: 100%;
+    }
+
+    .btn:hover { 
+      transform: scale(1.05); 
+      background: linear-gradient(135deg, var(--accent), var(--brand)); 
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--brand);
+      border: 2px solid var(--brand);
+    }
+
+    .btn-secondary:hover {
+      background: #fff5f5;
+    }
+
+    .timer {
+      color: #777;
+      margin: 15px 0;
+      font-size: 14px;
+    }
+
+    .resend {
+      color: var(--brand);
+      cursor: pointer;
+      text-decoration: underline;
+      margin-top: 15px;
+      display: inline-block;
+    }
+
+    .resend.disabled {
+      color: #aaa;
+      cursor: not-allowed;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .success-icon {
+      font-size: 60px;
+      color: var(--brand);
+      margin-bottom: 20px;
+    }
+
+    .verification-steps {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px 0;
+      position: relative;
+    }
+
+    .verification-steps::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #ddd;
+      z-index: 1;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .step-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ddd;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-bottom: 8px;
+      transition: 0.3s;
+    }
+
+    .step.active .step-circle {
+      background: var(--brand);
+    }
+
+    .step.completed .step-circle {
+      background: var(--brand);
+    }
+
+    .step.completed .step-circle::after {
+      content: '✓';
+    }
+
+    .step-label {
+      font-size: 12px;
+      color: #777;
+      text-align: center;
+    }
+
+    .step.active .step-label {
+      color: var(--brand);
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      font-size: 14px;
+      color: #555;
+      background: #fff;
+      border-top: 1px solid #eee;
+      margin-top: 60px;
+    }
+
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ZT | ZomaTaste</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="ourservice.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- Progress Steps -->
+    <div class="verification-steps">
+      <div class="step active" id="step1">
+        <div class="step-circle">1</div>
+        <div class="step-label">Phone</div>
+      </div>
+      <div class="step" id="step2">
+        <div class="step-circle">2</div>
+        <div class="step-label">OTP</div>
+      </div>
+      <div class="step" id="step3">
+        <div class="step-circle">3</div>
+        <div class="step-label">Complete</div>
+      </div>
+    </div>
+
+    <!-- Step 1: Phone Number Input -->
+    <div id="phoneStep">
+      <h2>Enter Your Phone Number</h2>
+      <p>We'll send a verification code to this number</p>
+      <input type="tel" class="phone-input" id="phoneInput" placeholder="Enter 10-digit phone number" maxlength="10">
+      <button class="btn" id="sendOtpBtn">Send OTP</button>
+    </div>
+    
+    <!-- Step 2: OTP Verification -->
+    <div id="otpStep" class="hidden">
+      <h2>Enter OTP</h2>
+      <p>We've sent a 6-digit verification code to <span id="phoneNumberDisplay"></span></p>
+      <div class="otp-inputs">
+        <input type="text" class="otp-input" maxlength="1" data-index="0">
+        <input type="text" class="otp-input" maxlength="1" data-index="1">
+        <input type="text" class="otp-input" maxlength="1" data-index="2">
+        <input type="text" class="otp-input" maxlength="1" data-index="3">
+        <input type="text" class="otp-input" maxlength="1" data-index="4">
+        <input type="text" class="otp-input" maxlength="1" data-index="5">
+      </div>
+      <div class="timer" id="timer">Resend OTP in <span id="countdown">60</span> seconds</div>
+      <div class="resend disabled" id="resendBtn">Resend OTP</div>
+      <button class="btn" id="verifyBtn">Verify OTP</button>
+      <button class="btn btn-secondary" id="changeNumberBtn">Change Number</button>
+    </div>
+    
+    <!-- Step 3: Success -->
+    <div id="successStep" class="hidden">
+      <div class="success-icon">✅</div>
+      <h2>Verification Successful!</h2>
+      <p>Your phone number has been verified successfully.</p>
+      <button class="btn" id="continueBtn">Continue</button>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 ZomaTaste — Secure Verification System 🔒
+  </footer>
+
+  <script>
+    const phoneStep = document.getElementById('phoneStep');
+    const otpStep = document.getElementById('otpStep');
+    const successStep = document.getElementById('successStep');
+    const phoneInput = document.getElementById('phoneInput');
+    const sendOtpBtn = document.getElementById('sendOtpBtn');
+    const phoneNumberDisplay = document.getElementById('phoneNumberDisplay');
+    const otpInputs = document.querySelectorAll('.otp-input');
+    const verifyBtn = document.getElementById('verifyBtn');
+    const changeNumberBtn = document.getElementById('changeNumberBtn');
+    const resendBtn = document.getElementById('resendBtn');
+    const countdownEl = document.getElementById('countdown');
+    const timerEl = document.getElementById('timer');
+    const continueBtn = document.getElementById('continueBtn');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+
+    let countdown = 60;
+    let countdownInterval;
+    let generatedOTP = '';
+    let userPhone = '';
+
+    function init() {
+      setupEventListeners();
+    }
+
+    function generateOTP() {
+      return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    function startCountdown() {
+      countdown = 60;
+      countdownEl.textContent = countdown;
+      resendBtn.classList.add('disabled');
+      clearInterval(countdownInterval);
+      countdownInterval = setInterval(() => {
+        countdown--;
+        countdownEl.textContent = countdown;
+        if (countdown <= 0) {
+          clearInterval(countdownInterval);
+          timerEl.style.display = 'none';
+          resendBtn.classList.remove('disabled');
+        }
+      }, 1000);
+    }
+
+    function setupEventListeners() {
+      sendOtpBtn.addEventListener('click', sendOTP);
+      otpInputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+          if (e.target.value && index < otpInputs.length - 1) otpInputs[index + 1].focus();
+          if (isOTPComplete()) verifyBtn.disabled = false;
+        });
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace' && !input.value && index > 0) otpInputs[index - 1].focus();
+        });
+      });
+
+      verifyBtn.addEventListener('click', verifyOTP);
+      changeNumberBtn.addEventListener('click', () => {
+        otpStep.classList.add('hidden');
+        phoneStep.classList.remove('hidden');
+        step2.classList.remove('active');
+        step1.classList.add('active');
+        clearOTPInputs();
+      });
+
+      resendBtn.addEventListener('click', () => {
+        if (!resendBtn.classList.contains('disabled')) {
+          generatedOTP = generateOTP();
+          console.log('New OTP:', generatedOTP);
+          startCountdown();
+          timerEl.style.display = 'block';
+          clearOTPInputs();
+        }
+      });
+
+      // ✅ Continue button goes to success.html
+      continueBtn.addEventListener('click', () => {
+        localStorage.setItem('zt_phone_verified', 'true');
+        localStorage.setItem('zt_user_phone', userPhone);
+        window.location.href = 'success.html';
+      });
+    }
+
+    function sendOTP() {
+      const phone = phoneInput.value.trim();
+      if (!/^[0-9]{10}$/.test(phone)) {
+        alert('Please enter a valid 10-digit phone number.');
+        return;
+      }
+      userPhone = phone;
+      generatedOTP = generateOTP();
+      console.log('OTP for', phone, ':', generatedOTP);
+      phoneStep.classList.add('hidden');
+      otpStep.classList.remove('hidden');
+      phoneNumberDisplay.textContent = `******${phone.slice(-4)}`;
+      step1.classList.remove('active');
+      step1.classList.add('completed');
+      step2.classList.add('active');
+      startCountdown();
+    }
+
+    function isOTPComplete() {
+      return Array.from(otpInputs).every(input => input.value);
+    }
+
+    function clearOTPInputs() {
+      otpInputs.forEach(input => input.value = '');
+      otpInputs[0].focus();
+      verifyBtn.disabled = true;
+    }
+
+    function verifyOTP() {
+      const enteredOTP = Array.from(otpInputs).map(input => input.value).join('');
+      if (enteredOTP === "123456") {
+        otpStep.classList.add('hidden');
+        successStep.classList.remove('hidden');
+        step2.classList.remove('active');
+        step2.classList.add('completed');
+        step3.classList.add('active');
+      } else {
+        alert('Invalid OTP. Please try again.');
+        clearOTPInputs();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

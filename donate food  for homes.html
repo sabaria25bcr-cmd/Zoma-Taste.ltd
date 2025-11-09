@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZomaTaste — Donate Surplus Food</title>
+  <meta name="description" content="Donate surplus/waste-cooked food to support homeless homes. Schedule pickup, donate money, or volunteer." />
+  <style>
+    /* Poppins-like theme consistent with ZomaTaste screenshot */
+    :root{
+      --brand:#e4002b;
+      --brand-dark:#b80021;
+      --bg:#fff5f5;
+      --panel:#ffffff;
+      --muted:#666;
+      --radius:12px;
+      --shadow: 0 6px 22px rgba(15,15,20,0.06);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial; background:var(--bg);color:#222; -webkit-font-smoothing:antialiased}
+    header{background:#fff;display:flex;align-items:center;justify-content:space-between;padding:12px 36px;box-shadow:0 1px 8px rgba(0,0,0,0.06);position:sticky;top:0;z-index:40}
+    .logo{font-weight:800;color:var(--brand);font-size:20px}
+    nav a{margin-left:18px;color:#333;text-decoration:none;font-weight:500}
+    nav a:hover{color:var(--brand)}
+    .container{max-width:1100px;margin:28px auto;padding:0 20px}
+    .hero{background:linear-gradient(90deg,#fff5f5,#ffe6e6);padding:56px;border-radius:18px;display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;box-shadow:var(--shadow)}
+    .hero h1{color:var(--brand);margin:0;font-size:32px}
+    .hero p{color:var(--muted);margin:10px 0 0}
+    .card{background:var(--panel);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .section-title{color:var(--brand);text-align:center;margin:8px 0 16px;font-size:20px}
+
+    /* forms */
+    label{display:block;font-size:13px;color:#333;margin-top:12px;font-weight:600}
+    input[type=text], input[type=tel], input[type=email], input[type=number], select, textarea, input[type=datetime-local]{
+      width:100%;padding:10px;border-radius:10px;border:1px solid #e6e6e6;margin-top:8px;font-size:14px;background:#fff;
+    }
+    textarea{min-height:90px;resize:vertical}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .full{grid-column:1/-1}
+    .small{font-size:13px;color:var(--muted);margin-top:6px}
+    .btn{display:inline-block;padding:12px 16px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+    .btn-primary{background:var(--brand);color:#fff}
+    .btn-ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);color:#333}
+    .donate-options{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .donate-options button{padding:8px 12px;border-radius:10px;border:1px solid var(--brand);background:#ffe6e6;color:var(--brand);cursor:pointer;font-weight:700}
+    .donate-options button.active, .donate-options button:hover{background:var(--brand);color:#fff}
+
+    /* right column */
+    aside .impact{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:12px;margin-bottom:12px;background:linear-gradient(180deg,rgba(255,255,255,1),#fff)}
+    .impact .icon{width:48px;height:48px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(0,0,0,0.04)}
+
+    /* QR */
+    .qr{display:flex;flex-direction:column;align-items:center;gap:8px}
+    .qr img{width:180px;height:180px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.08);cursor:pointer}
+
+    /* volunteer & how it works */
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+    .vol-form input{margin-bottom:8px}
+
+    /* modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.55);display:none;align-items:center;justify-content:center;z-index:90}
+    .modal{background:#fff;padding:20px;border-radius:12px;max-width:520px;width:95%;box-shadow:0 20px 60px rgba(0,0,0,0.4)}
+    .modal h3{margin:0;color:var(--brand)}
+
+    /* success list */
+    .pickup-list{margin-top:16px}
+    .pickup-item{background:#fff;padding:12px;border-radius:10px;margin-bottom:10px;border-left:4px solid var(--brand);display:flex;justify-content:space-between;align-items:center}
+
+    footer{text-align:center;padding:26px;color:#777;margin-top:36px;border-top:1px solid #f0dede}
+
+    /* responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr; padding:28px}
+      .split{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">ZT | ZomaTaste</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="#donate">Donate</a>
+      <a href="#volunteer">Volunteer</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1>Donate Surplus / Waste Food to Homes</h1>
+        <p>Have extra cooked food? Schedule a free pickup — our partner volunteers and shelters will collect, re-package safely, and deliver to homes and shelters.</p>
+
+        <div style="margin-top:18px" class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <strong style="font-size:16px">Quick Steps</strong>
+              <div class="small">Schedule pickup → Volunteer collects → Food delivered safely</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-weight:800;color:var(--brand)">Trusted Partners</div>
+              <div class="small">Local NGOs & community kitchens</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="card">
+          <div class="impact">
+            <div class="icon">🍲</div>
+            <div>
+              <div style="font-weight:800">Food Safety</div>
+              <div class="small">We instruct donors to package food properly and label with time & contents for safety.</div>
+            </div>
+          </div>
+
+          <div class="impact">
+            <div class="icon">🚚</div>
+            <div>
+              <div style="font-weight:800">Free Pickup</div>
+              <div class="small">Volunteers pick up at scheduled times in your area.</div>
+            </div>
+          </div>
+
+          <div style="margin-top:8px" class="qr">
+            <!-- clicking the QR will open the image (use your uploaded file name) -->
+            <img id="gpayQr" src="GooglePay_QR.png" alt="GPay QR Code" title="Click to open GPay QR">
+            <div class="small">Click or scan to donate money via GPay</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- donation / pickup form -->
+    <section id="donate" style="margin-top:22px" class="card">
+      <h2 class="section-title">Schedule a Pickup or Donate Money</h2>
+
+      <div class="split">
+        <!-- left: pickup form -->
+        <div>
+          <form id="pickupForm" autocomplete="off">
+            <strong>Pickup Request (Surplus Food)</strong>
+            <div class="grid" style="margin-top:10px">
+              <div>
+                <label for="pname">Your name</label>
+                <input id="pname" type="text" placeholder="Full name" required>
+              </div>
+              <div>
+                <label for="pmobile">Mobile number</label>
+                <input id="pmobile" type="tel" placeholder="10-digit mobile" pattern="[0-9]{10}" required>
+              </div>
+            </div>
+
+            <label for="paddress">Pickup Address</label>
+            <input id="paddress" type="text" placeholder="Street, locality, city" required>
+
+            <label for="pdatetime">Preferred pickup date & time</label>
+            <input id="pdatetime" type="datetime-local" required>
+
+            <label for="pquantity">Quantity (approx)</label>
+            <select id="pquantity">
+              <option value="small">Small (1–5 meals)</option>
+              <option value="medium" selected>Medium (6–20 meals)</option>
+              <option value="large">Large (20+ meals)</option>
+            </select>
+
+            <label>Food type</label>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <label><input type="radio" name="foodtype" value="veg" checked> Veg</label>
+              <label><input type="radio" name="foodtype" value="nonveg"> Non-veg</label>
+              <label><input type="radio" name="foodtype" value="mixed"> Mixed</label>
+            </div>
+
+            <label for="pnotes">Notes (how it is packaged, reheating info, allergens)</label>
+            <textarea id="pnotes" placeholder="E.g., kept in insulated boxes, contains nuts..."></textarea>
+
+            <label for="pimage">Add photo (optional)</label>
+            <input id="pimage" type="file" accept="image/*">
+
+            <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+              <button class="btn btn-primary" type="submit">Request Pickup</button>
+              <button type="button" id="clearPickup" class="btn btn-ghost">Clear</button>
+            </div>
+
+            <div class="small" style="margin-top:10px">We'll contact you on the provided mobile to confirm pickup details.</div>
+          </form>
+
+          <div class="pickup-list" id="pickupList" aria-live="polite"></div>
+        </div>
+
+        <!-- right: monetary donation -->
+        <div>
+          <div style="padding-bottom:12px">
+            <strong>Donate Money</strong>
+            <div class="small">Choose an amount or enter a custom value. Use GPay (scan QR) or Card.</div>
+          </div>
+
+          <div class="card" style="padding:12px">
+            <div class="donate-options" id="moneyButtons">
+              <button data-amount="50">₹50</button>
+              <button data-amount="100" class="active">₹100</button>
+              <button data-amount="250">₹250</button>
+              <button data-amount="500">₹500</button>
+            </div>
+
+            <label for="moneyCustom">Custom amount (₹)</label>
+            <input id="moneyCustom" type="number" placeholder="e.g. 150">
+
+            <label for="payMethod">Payment method</label>
+            <select id="payMethod">
+              <option value="gpay">GPay (QR)</option>
+              <option value="card">Credit / Debit Card</option>
+              <option value="cod">Cash pickup (volunteer)</option>
+            </select>
+
+            <!-- QR block -->
+            <div id="qrBlock" style="margin-top:12px;text-align:center">
+              <a id="qrLink" href="GooglePay_QR.png" target="_blank" rel="noreferrer">
+                <img src="GooglePay_QR.png" alt="GPay QR" style="width:160px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.08);">
+              </a>
+              <div class="small">Click or scan the QR. (Opens full image)</div>
+            </div>
+
+            <!-- Card details -->
+            <div id="cardBlock" style="display:none;margin-top:12px">
+              <label for="cardNumber">Card number</label>
+              <input id="cardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="xxxx xxxx xxxx xxxx">
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <div style="flex:1">
+                  <label for="cardExp">Expiry (MM/YY)</label>
+                  <input id="cardExp" type="text" maxlength="5" placeholder="MM/YY">
+                </div>
+                <div style="flex:1">
+                  <label for="cardCvv">CVV</label>
+                  <input id="cardCvv" type="password" maxlength="4" placeholder="CVV">
+                </div>
+              </div>
+              <label for="cardName">Name on card</label>
+              <input id="cardName" type="text" placeholder="Full name">
+            </div>
+
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <button id="donateMoneyBtn" class="btn btn-primary">Donate ₹<span id="donationAmount">100</span></button>
+              <button id="donateClear" type="button" class="btn btn-ghost">Reset</button>
+            </div>
+
+            <div class="small" style="margin-top:10px">You can also request cash pickup and our volunteer will collect while picking food (if available).</div>
+          </div>
+
+          <div style="margin-top:12px" class="card">
+            <strong>Why donate surplus food?</strong>
+            <div class="small" style="margin-top:6px">Donating edible surplus reduces waste and supports shelters. Follow packaging & safety instructions below.</div>
+            <ul class="small" style="margin-top:8px;padding-left:18px">
+              <li>Pack hot food in insulated containers.</li>
+              <li>Label contents, date & time prepared.</li>
+              <li>Avoid items that spoil easily without refrigeration.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- volunteer -->
+    <section id="volunteer" style="margin-top:20px" class="card">
+      <h3 style="margin:0">Volunteer / Partner with Us</h3>
+      <p class="small">Join logistics, pickup, or distribution teams.</p>
+      <form id="volForm" class="vol-form" style="margin-top:12px">
+        <div class="grid">
+          <input id="vname" placeholder="Full name" required>
+          <input id="vphone" placeholder="Phone number" required>
+        </div>
+        <div class="grid">
+          <input id="vcity" placeholder="City / Locality" required>
+          <input id="vrole" placeholder="I can help with (pickup/delivery/kitchen)"/>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn btn-primary" type="submit">Sign up</button>
+          <button type="button" id="volClear" class="btn btn-ghost">Reset</button>
+        </div>
+      </form>
+    </section>
+
+    <footer>
+      © <span id="yr"></span> ZomaTaste — Donate surplus food, feed homes. &nbsp; &middot; &nbsp; Contact: <a href="mailto:hello@zomataste.example">hello@zomataste.example</a>
+    </footer>
+  </main>
+
+  <!-- modal -->
+  <div id="modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document" aria-live="polite">
+      <h3 id="modalTitle">Thank you</h3>
+      <p id="modalBody" class="small">We received your request.</p>
+      <div style="text-align:right;margin-top:12px">
+        <button id="modalClose" class="btn btn-ghost">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // small helpers & state
+    const moneyButtons = document.querySelectorAll('#moneyButtons button');
+    const moneyCustom = document.getElementById('moneyCustom');
+    const donationAmountEl = document.getElementById('donationAmount');
+    const payMethod = document.getElementById('payMethod');
+    const qrBlock = document.getElementById('qrBlock');
+    const cardBlock = document.getElementById('cardBlock');
+    const donateMoneyBtn = document.getElementById('donateMoneyBtn');
+
+    // pickup form elements
+    const pickupForm = document.getElementById('pickupForm');
+    const pickupList = document.getElementById('pickupList');
+
+    // modal
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalClose = document.getElementById('modalClose');
+
+    // initialize year
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // Money amount behavior
+    function setActiveMoneyButton(amountBtn){
+      moneyButtons.forEach(b => b.classList.remove('active'));
+      if (amountBtn) amountBtn.classList.add('active');
+      donationAmountEl.textContent = (amountBtn ? amountBtn.dataset.amount : (moneyCustom.value || '0'));
+    }
+    moneyButtons.forEach(btn=>{
+      btn.addEventListener('click', () => {
+        setActiveMoneyButton(btn);
+        moneyCustom.value = '';
+      });
+    });
+    moneyCustom.addEventListener('input', () => {
+      moneyButtons.forEach(b => b.classList.remove('active'));
+      donationAmountEl.textContent = moneyCustom.value || '0';
+    });
+
+    // Payment method toggle
+    payMethod.addEventListener('change', () => {
+      if (payMethod.value === 'gpay'){
+        qrBlock.style.display = 'block';
+        cardBlock.style.display = 'none';
+      } else if (payMethod.value === 'card'){
+        qrBlock.style.display = 'none';
+        cardBlock.style.display = 'block';
+      } else {
+        qrBlock.style.display = 'none';
+        cardBlock.style.display = 'none';
+      }
+    });
+
+    // Donate money click (simulated)
+    donateMoneyBtn.addEventListener('click', () => {
+      const amount = moneyCustom.value || document.querySelector('#moneyButtons button.active')?.dataset.amount || '0';
+      if (!amount || Number(amount) <= 0) {
+        alert('Please choose or enter a valid donation amount.');
+        return;
+      }
+      // If GPay selected -> open QR in new tab (user can scan or pay)
+      if (payMethod.value === 'gpay') {
+        // For a nicer mobile experience, user should scan the QR with their banking / GPay app
+        // Here we open the QR image in a new tab (the image file is in same folder).
+        window.open('GooglePay_QR.png', '_blank');
+        showModal('Thank you', `Please scan the QR using GPay to complete a ₹${amount} donation. If you want automatic GPay deeplink, we can add it later.`);
+      } else if (payMethod.value === 'card') {
+        // A production site would send card details to a payment gateway securely.
+        // Here we simply simulate success.
+        showModal('Donation received', `Thanks — we've recorded your ₹${amount} donation (simulated).`);
+      } else {
+        showModal('Request noted', `Thanks — a volunteer will contact you to collect cash or coordinate the donation of ₹${amount}.`);
+      }
+    });
+
+    // Pickup form submit
+    pickupForm.addEventListener('submit', e=>{
+      e.preventDefault();
+      // basic validation
+      const name = document.getElementById('pname').value.trim();
+      const mobile = document.getElementById('pmobile').value.trim();
+      const address = document.getElementById('paddress').value.trim();
+      const dt = document.getElementById('pdatetime').value;
+      if (!name || !mobile || !address || !dt) {
+        alert('Please fill required fields: name, mobile, address, and preferred date/time.');
+        return;
+      }
+
+      // collect data
+      const item = {
+        id: Date.now(),
+        name, mobile, address, datetime: dt,
+        quantity: document.getElementById('pquantity').value,
+        foodtype: document.querySelector('input[name="foodtype"]:checked').value,
+        notes: document.getElementById('pnotes').value || ''
+      };
+      // store in localStorage for demo
+      const stored = JSON.parse(localStorage.getItem('wastePickups') || '[]');
+      stored.unshift(item);
+      localStorage.setItem('wastePickups', JSON.stringify(stored));
+      renderPickupList();
+
+      // reset form (keeping name & mobile might be helpful; but we'll clear everything)
+      pickupForm.reset();
+      showModal('Pickup scheduled', `Thanks ${name}. We saved your pickup request for ${new Date(dt).toLocaleString()}. A volunteer will contact ${mobile} to confirm.`);
+    });
+
+    // render pickups list
+    function renderPickupList(){
+      const arr = JSON.parse(localStorage.getItem('wastePickups') || '[]');
+      pickupList.innerHTML = '';
+      if (!arr.length) {
+        pickupList.innerHTML = '<div class="small">No pickup requests yet (saved locally).</div>';
+        return;
+      }
+      arr.forEach(p => {
+        const el = document.createElement('div');
+        el.className = 'pickup-item';
+        el.innerHTML = `<div>
+                          <div style="font-weight:700">${p.name} — ${p.mobile}</div>
+                          <div class="small">${p.quantity} • ${p.foodtype} • ${new Date(p.datetime).toLocaleString()}</div>
+                          <div class="small" style="margin-top:6px">${p.address}</div>
+                        </div>
+                        <div style="text-align:right;min-width:140px">
+                          <div class="small">Notes:</div>
+                          <div class="small" style="max-width:140px;overflow:hidden;text-overflow:ellipsis">${p.notes||'—'}</div>
+                        </div>`;
+        pickupList.appendChild(el);
+      });
+    }
+
+    // volunteer form
+    document.getElementById('volForm').addEventListener('submit', e=>{
+      e.preventDefault();
+      const vname = document.getElementById('vname').value.trim();
+      const vphone = document.getElementById('vphone').value.trim();
+      if (!vname || !vphone) {
+        alert('Please fill volunteer name and phone.');
+        return;
+      }
+      showModal('Thank you', `Thanks ${vname}. We'll contact ${vphone} with volunteer opportunities.`);
+      document.getElementById('volForm').reset();
+    });
+    document.getElementById('volClear').addEventListener('click', ()=>document.getElementById('volForm').reset());
+
+    // clear pickup
+    document.getElementById('clearPickup').addEventListener('click', ()=>pickupForm.reset());
+
+    // Reset money inputs
+    document.getElementById('donateClear').addEventListener('click', ()=>{
+      moneyCustom.value = '';
+      moneyButtons.forEach(b => b.classList.remove('active'));
+      moneyButtons[1].classList.add('active');
+      donationAmountEl.textContent = '100';
+      payMethod.value = 'gpay';
+      payMethod.dispatchEvent(new Event('change'));
+    });
+
+    // Modal helpers
+    function showModal(title, body){
+      modalTitle.textContent = title;
+      modalBody.textContent = body;
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden','false');
+    }
+    modalClose.addEventListener('click', ()=> {
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden','true');
+    });
+    // close modal when clicking outside
+    modal.addEventListener('click', (e)=>{ if (e.target === modal) { modal.style.display='none'; } });
+
+    // small UX: format card number input with spaces (if shown)
+    const cardNumber = document.getElementById('cardNumber');
+    if (cardNumber) {
+      cardNumber.addEventListener('input', (e)=>{
+        let v = e.target.value.replace(/\D/g,'').slice(0,16);
+        v = v.match(/.{1,4}/g)?.join(' ') || v;
+        e.target.value = v;
+      });
+    }
+
+    // init
+    setActiveMoneyButton(document.querySelector('#moneyButtons button.active'));
+    renderPickupList();
+    payMethod.dispatchEvent(new Event('change'));
+
+    // open QR full-screen on click (mobile friendly)
+    document.getElementById('gpayQr').addEventListener('click', ()=> {
+      // show the image in a new tab (or you can link to a deep link if available)
+      window.open('GooglePay_QR.png','_blank');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZomaTaste Downtown</title>
+  <style>
+    :root { --brand:#e63946; --accent:#ff6b6b; --bg:#fff7f7; }
+    * { box-sizing:border-box; scroll-behavior:smooth; }
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: #222;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 28px;
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo { color: var(--brand); font-weight: 800; font-size: 20px; }
+    nav a {
+      margin-left: 16px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      transition: color .2s ease;
+    }
+    nav a:hover { color: var(--brand); }
+
+    .hero {
+      max-width: 1100px;
+      margin: 30px auto;
+      border-radius: 18px;
+      background: #fff;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+      transition: transform .3s ease;
+    }
+    .hero:hover { transform: scale(1.01); }
+
+    .hero img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 4px solid var(--brand);
+    }
+
+    .content {
+      padding: 25px 30px 35px;
+    }
+
+    h1 {
+      color: var(--brand);
+      margin: 0;
+      font-size: 32px;
+    }
+
+    p.lead {
+      color: #555;
+      line-height: 1.6;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 22px;
+      margin-top: 25px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      box-shadow: 0 8px 25px rgba(230,57,70,0.1);
+      transform: translateY(-3px);
+    }
+
+    .menu-list li { margin: 8px 0; }
+
+    /* --- Dish Gallery --- */
+    .dish-gallery {
+      margin-top: 25px;
+      background: #fff5f5;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 4px 12px rgba(230,57,70,0.1);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+    .dish-gallery h3 {
+      color: var(--brand);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .dish-row {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .dish {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      width: 180px;
+      text-align: center;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .dish:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(230,57,70,0.2);
+    }
+    .dish img { width: 100%; height: 120px; object-fit: cover; }
+    .dish p { margin: 8px 0; color: #333; font-weight: 600; font-size: 14px; }
+
+    .reviews .review {
+      background: #fff5f5;
+      padding: 14px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 10px rgba(230,57,70,0.05);
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg,var(--brand),var(--accent));
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(230,57,70,0.3);
+    }
+    .btn-outline {
+      background: #fff;
+      color: var(--brand);
+      border: 2px solid var(--brand);
+    }
+
+    .back {
+      margin-top: 28px;
+      display: inline-block;
+      font-weight: 600;
+      color: var(--brand);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+    .back:hover { color: var(--accent); }
+
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+      margin: 40px 0 10px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width:980px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero img { height: 260px; }
+      .content { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="logo">ZT | ZomaTaste</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+    <div style="font-size:13px;color:#777">Downtown</div>
+  </header>
+
+  <main class="hero" role="main">
+    <img src="111.png" alt="ZomaTaste Downtown">
+    <div class="content">
+      <h1>ZomaTaste Downtown</h1>
+      <p class="lead">
+        Located in the heart of the city, ZomaTaste Downtown offers an elegant dining experience
+        with signature dishes crafted by our head chef. Perfect for date nights, family dinners, and business meetings.
+      </p>
+
+      <div class="grid">
+        <section>
+          <div class="card">
+            <h3>Highlights</h3>
+            <ul class="menu-list">
+              <li><strong>Signature:</strong> Hyderabadi Chicken Biryani</li>
+              <li><strong>Chef’s Special:</strong> Paneer Royal Curry</li>
+              <li><strong>Dessert:</strong> Choco Lava Cake</li>
+            </ul>
+            <p style="margin-top:10px;color:#666;">
+              We use fresh, locally sourced ingredients and prepare every dish to order —
+              expect bold flavors and beautiful plating.
+            </p>
+            <div style="margin-top:14px">
+              <a class="btn" href="menu.html">View Full Menu</a>
+              <a class="btn btn-outline" href="booking.html" style="margin-left:10px;">Reserve Table</a>
+            </div>
+          </div>
+
+          <!-- Added Dish Gallery -->
+          <div class="dish-gallery">
+            <h3>Signature Dishes</h3>
+            <div class="dish-row">
+              <div class="dish">
+                <img src="001.jpg" alt="Chicken Biryani">
+                <p>🔥 Hyderabadi Chicken Biryani</p>
+              </div>
+              <div class="dish">
+                <img src="002.jpg" alt="Paneer Royal Curry">
+                <p>🥘 Paneer Royal Curry</p>
+              </div>
+              <div class="dish">
+                <img src="003.jpg" alt="Choco Lava Cake">
+                <p>🍫 Choco Lava Cake</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <aside>
+          <div class="card">
+            <h3>Customer Feedback</h3>
+            <div class="reviews">
+              <div class="review">
+                <p>"The biryani was perfectly spiced — aromatic and moist. A lovely evening with excellent service."</p>
+                <strong>– Arjun K.</strong>
+              </div>
+              <div class="review">
+                <p>"Cozy interior, great lighting for dates. The chef pays attention to small details in presentation."</p>
+                <strong>– Meera S.</strong>
+              </div>
+              <div class="review">
+                <p>"Family-friendly portions and polite staff. The paneer was rich and well-seasoned."</p>
+                <strong>– Sangeetha P.</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:14px">
+            <h3>Details</h3>
+            <p>📍 Chennai, Tamil Nadu<br>⏰ 11:00 AM – 11:00 PM<br>📞 +91 98765 43210</p>
+          </div>
+        </aside>
+      </div>
+
+      <a class="back" href="index.html">⬅ Back to Restaurants</a>
+    </div>
+  </main>
+
+  <footer>© 2025 ZomaTaste — Crafted with Passion 🍴</footer>
+</body>
+</html>

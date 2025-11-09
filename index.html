@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZomaTaste | Home</title>
   <style>
-    /* GENERAL */
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
       color: #333;
       background: linear-gradient(135deg, #fff5f5, #ffecec);
       overflow-x: hidden;
+      animation: bgMove 10s ease-in-out infinite alternate;
     }
 
     /* HEADER */
@@ -26,6 +28,7 @@
       top: 0;
       z-index: 10;
       animation: fadeInDown 1s ease;
+      backdrop-filter: blur(10px);
     }
 
     header h1 {
@@ -40,83 +43,78 @@
       color: #333;
       font-weight: 500;
       transition: color 0.3s, transform 0.3s;
+      position: relative;
     }
 
-    nav a:hover {
-      color: #e63946;
-      transform: scale(1.05);
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #e63946;
+      transition: width 0.3s;
     }
+
+    nav a:hover::after { width: 100%; }
+    nav a:hover { color: #e63946; transform: scale(1.05); }
 
     /* HERO SECTION */
     .hero {
       text-align: center;
-      padding: 60px 20px 90px;
-      background: url('c.png') no-repeat center center/cover;
-      position: relative;
+      padding: 80px 20px 120px;
+      background: url('https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1200&q=80') no-repeat center/cover;
       color: white;
-      overflow: hidden;
+      position: relative;
+      animation: fadeIn 2s ease;
     }
 
     .hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.55);
       z-index: 0;
     }
 
     .hero h2 {
       position: relative;
-      font-size: 2.8em;
-      margin-bottom: 10px;
-      animation: slideDown 1.5s ease;
+      font-size: 3em;
+      animation: slideDown 1.2s ease-out;
+      z-index: 1;
     }
 
     .hero p {
       position: relative;
       font-size: 1.2em;
       max-width: 600px;
-      margin: 0 auto;
+      margin: 15px auto;
       color: #f5f5f5;
-      animation: fadeIn 2s ease;
+      z-index: 1;
+      animation: fadeInUp 2s ease;
     }
 
     .hero button {
-      margin-top: 25px;
-      padding: 14px 35px;
+      position: relative;
+      z-index: 1;
+      margin-top: 30px;
+      padding: 15px 40px;
       border: none;
       background: linear-gradient(135deg, #ff3b30, #ff6b5b);
       color: white;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 600;
-      border-radius: 30px;
+      border-radius: 40px;
       cursor: pointer;
       transition: transform 0.3s, background 0.3s;
-      animation: fadeInUp 2s ease;
-      position: relative;
-      z-index: 1;
+      animation: pulse 2s infinite;
+      box-shadow: 0 4px 15px rgba(255, 90, 90, 0.4);
     }
 
     .hero button:hover {
       transform: scale(1.1);
       background: linear-gradient(135deg, #ff6b5b, #ff3b30);
-    }
-
-    /* FLOATING FOOD GRAPHICS */
-    .decor {
-      position: absolute;
-      width: 90px;
-      opacity: 0.15;
-      animation: float 6s ease-in-out infinite;
-      z-index: 0;
-    }
-    .decor1 { top: 10%; left: 10%; animation-delay: 0s; }
-    .decor2 { top: 70%; right: 8%; animation-delay: 2s; }
-    .decor3 { bottom: 15%; left: 45%; animation-delay: 4s; }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
     }
 
     /* ABOUT SECTION */
@@ -125,15 +123,14 @@
       margin: 80px auto;
       text-align: center;
       background: white;
-      padding: 40px 30px;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-      animation: fadeInUp 1s ease;
+      padding: 50px 30px;
+      border-radius: 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
 
     .about h2 {
       color: #e63946;
-      font-size: 28px;
+      font-size: 30px;
       margin-bottom: 15px;
     }
 
@@ -141,49 +138,88 @@
       font-size: 16px;
       color: #555;
       line-height: 1.7;
+      max-width: 700px;
+      margin: 0 auto 30px;
     }
 
-    /* VALUE BOXES */
-    .values {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      margin-top: 50px;
+    /* RESTAURANTS SECTION */
+    .restaurants {
+      text-align: center;
+      background: #fff;
+      padding: 70px 30px;
+      border-radius: 25px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      margin: 60px auto;
+      max-width: 1200px;
+      animation: fadeInUp 1.2s ease;
     }
 
-    .value-box {
+    .restaurants h2 {
+      color: #e63946;
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .restaurants p {
+      color: #555;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      font-size: 16px;
+    }
+
+    .restaurant-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    .restaurant-card {
       background: #fff7f7;
       border-radius: 20px;
-      width: 280px;
-      padding: 25px 20px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      transition: transform 0.4s ease, box-shadow 0.3s ease;
-      animation: fadeIn 1.5s ease;
+      box-shadow: 0 4px 20px rgba(255, 90, 90, 0.15);
+      overflow: hidden;
+      transition: all 0.4s ease;
     }
 
-    .value-box:hover {
-      transform: translateY(-10px) scale(1.05);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    .restaurant-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 10px 25px rgba(255, 90, 90, 0.3);
     }
 
-    .value-box img {
-      width: 70px;
-      margin-bottom: 15px;
-      transition: transform 0.4s ease;
+    .restaurant-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s;
     }
 
-    .value-box:hover img {
-      transform: rotate(10deg) scale(1.1);
+    .restaurant-card:hover img { transform: scale(1.05); }
+
+    .restaurant-info {
+      padding: 20px;
     }
 
-    .value-box h3 {
+    .restaurant-info h3 {
       color: #e63946;
+      font-size: 20px;
       margin-bottom: 8px;
     }
 
-    /* FOOTER */
+    .restaurant-info p {
+      color: #444;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .restaurant-info span {
+      display: block;
+      color: #777;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .rating { color: gold; font-size: 18px; }
+
     footer {
       text-align: center;
       background: #fff;
@@ -195,87 +231,152 @@
     }
 
     /* ANIMATIONS */
-    @keyframes fadeIn { 
-      from { opacity: 0; transform: translateY(20px); } 
-      to { opacity: 1; transform: translateY(0); } 
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px);} to { opacity: 1; transform: translateY(0);} }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px);} to { opacity: 1; transform: translateY(0);} }
+    @keyframes slideDown { from {opacity: 0; transform: translateY(-50px);} to {opacity: 1; transform: translateY(0);} }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 15px rgba(255, 75, 75, 0.4); }
+      50% { box-shadow: 0 0 25px rgba(255, 75, 75, 0.7); transform: scale(1.03); }
     }
+    @keyframes bgMove { 0% { background-position: 0 0; } 100% { background-position: 100% 100%; } }
 
-    @keyframes fadeInUp {
-      0% {opacity: 0; transform: translateY(40px);}
-      100% {opacity: 1; transform: translateY(0);}
-    }
-
-    @keyframes fadeInDown {
-      0% {opacity: 0; transform: translateY(-40px);}
-      100% {opacity: 1; transform: translateY(0);}
-    }
-
-    @keyframes slideDown {
-      from {opacity: 0; transform: translateY(-50px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    /* RESPONSIVE */
     @media (max-width: 768px) {
-      .values { flex-direction: column; align-items: center; }
-      .hero h2 { font-size: 2em; }
-      .hero p { font-size: 1em; }
-      .decor { width: 60px; }
+      .hero h2 { font-size: 2.2em; }
+      .restaurant-card img { height: 180px; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>ZT | ZomaTaste</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="menu.html">Menu</a>
-    </nav>
-  </header>
+<header>
+  <h1>ZT | ZomaTaste</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="ourservice.html">Services</a>
+    <a href="donate food  for homes.html">Donate</a>
+    <a href="feedback.html">Feedback</a>
+    <a href="contact.html">Contact</a>
+<a href="booking.html">booking</a>
 
-  <!-- HERO -->
-  <section class="hero">
-    <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png" class="decor decor1" alt="Pizza Icon" />
-    <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" class="decor decor2" alt="Burger Icon" />
-    <img src="https://cdn-icons-png.flaticon.com/512/1046/1046787.png" class="decor decor3" alt="Noodles Icon" />
+  </nav>
+</header>
 
-    <h2>Welcome to ZomaTaste</h2>
-    <p>Freshly made, passionately served, and delivered with love — taste the joy in every bite!</p>
-    <button onclick="window.location.href='menu.html'">Explore Menu 🍴</button>
-  </section>
+<section class="hero">
+  <h2>Welcome to ZomaTaste 🍽️</h2>
+  <p>Freshly made, passionately served, and delivered with love — taste the joy in every bite!</p>
+  <button onclick="window.location.href='menu.html'">Explore Menu</button>
+</section>
 
-  <!-- ABOUT -->
-  <section class="about">
-    <h2>Why Choose ZomaTaste?</h2>
-    <p>
-      ZomaTaste isn’t just about food — it’s about creating moments. Every dish is crafted using the freshest ingredients, bursting with flavor, and prepared with care.
-    </p>
+<section class="about">
+  <h2>Why Choose ZomaTaste?</h2>
+  <p>We believe great food brings people together. At ZomaTaste, we serve happiness, quality, and care in every dish.</p>
+</section>
 
-    <div class="values">
-      <div class="value-box">
-        <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png" alt="Quality Food">
-        <h3>Quality Food</h3>
-        <p>We ensure every meal meets our high standards of taste and quality.</p>
-      </div>
+<section class="restaurants">
+  <h2>Our Restaurants 🍴</h2>
+  <p>Discover our branches across India — each offering a unique dining experience, but always the same ZomaTaste flavor.</p>
 
-      <div class="value-box">
-        <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Fresh Ingredients">
-        <h3>Fresh Ingredients</h3>
-        <p>We source our ingredients daily to bring you healthy, vibrant dishes.</p>
-      </div>
+  <div class="restaurant-grid">
+    <div class="restaurant-grid">
 
-      <div class="value-box">
-        <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Fast Delivery">
-        <h3>Fast Delivery</h3>
-        <p>Quick, reliable, and delivered with care — always on time!</p>
-      </div>
+  <a href="downtown.html" class="restaurant-card">
+    <img src="111.png" alt="Downtown">
+    <div class="restaurant-info">
+      <h3>ZomaTaste Downtown</h3>
+      <p>Heart of the city, elegant ambiance and top chefs ready to serve.</p>
+      <span>📍 Chennai, Tamil Nadu</span>
+      <div class="rating">⭐️⭐️⭐️⭐️⭐️</div>
     </div>
-  </section>
+  </a>
 
-  <footer>© 2025 ZomaTaste — Deliciously Animated 🍽️</footer>
+  <a href="marina-view.html" class="restaurant-card">
+    <img src="112.png" alt="Marina">
+    <div class="restaurant-info">
+      <h3>ZomaTaste Marina View</h3>
+      <p>Seaside dining with fresh seafood and live music.</p>
+      <span>📍 Marina Beach, Chennai</span>
+      <div class="rating">⭐️⭐️⭐️⭐️⭐️</div>
+    </div>
+  </a>
 
+  <a href="express-outlet.html" class="restaurant-card">
+    <img src="113.png" alt="Express">
+    <div class="restaurant-info">
+      <h3>ZomaTaste Express Outlet</h3>
+      <p>Quick bites and takeaway specials for foodies on the go.</p>
+      <span>📍 Coimbatore, Tamil Nadu</span>
+      <div class="rating">⭐️⭐️⭐️⭐️</div>
+    </div>
+  </a>
+
+  <a href="heritage-hall.html" class="restaurant-card">
+    <img src="114.png" alt="Heritage">
+    <div class="restaurant-info">
+      <h3>ZomaTaste Heritage Hall</h3>
+      <p>Classic South Indian dishes served with cultural warmth.</p>
+      <span>📍 Madurai, Tamil Nadu</span>
+      <div class="rating">⭐️⭐️⭐️⭐️⭐️</div>
+    </div>
+  </a>
+
+  <a href="elite-dine.html" class="restaurant-card">
+    <img src="115.png" alt="Elite">
+    <div class="restaurant-info">
+      <h3>ZomaTaste Elite Dine</h3>
+      <p>Fine dining at its best — luxury interior and signature cuisines.</p>
+      <span>📍 Bengaluru, Karnataka</span>
+      <div class="rating">⭐️⭐️⭐️⭐️⭐️</div>
+    </div>
+  </a>
+
+  <a href="family-hub.html" class="restaurant-card">
+    <img src="116.png" alt="Family Hub">
+    <div class="restaurant-info">
+      <h3>ZomaTaste Family Hub</h3>
+      <p>Perfect for family gatherings with a joyful vibe.</p>
+      <span>📍 Pune, Maharashtra</span>
+      <div class="rating">⭐️⭐️⭐️⭐️⭐️</div>
+    </div>
+  </a>
+
+  <a href="sky-terrace.html" class="restaurant-card">
+    <img src="117.png" alt="Sky Terrace">
+    <div class="restaurant-info">
+      <h3>ZomaTaste Sky Terrace</h3>
+      <p>Rooftop dining with panoramic skyline views.</p>
+      <span>📍 Hyderabad, Telangana</span>
+      <div class="rating">⭐️⭐️⭐️⭐️⭐️</div>
+    </div>
+  </a>
+
+  <a href="green-garden.html" class="restaurant-card">
+    <img src="118.png" alt="Green Garden">
+    <div class="restaurant-info">
+      <h3>ZomaTaste Green Garden</h3>
+      <p>Relax with nature in an open-air garden setting.</p>
+      <span>📍 Pune, Maharashtra</span>
+      <div class="rating">⭐️⭐️⭐️⭐️⭐️</div>
+    </div>
+  </a>
+
+  <a href="royal-feast.html" class="restaurant-card">
+    <img src="119.png" alt="Royal Feast">
+    <div class="restaurant-info">
+      <h3>ZomaTaste Royal Feast</h3>
+      <p>Grand platters and celebrations for royal dining.</p>
+      <span>📍 Mumbai, Maharashtra</span>
+      <div class="rating">⭐️⭐️⭐️⭐️⭐️</div>
+    </div>
+  </a>
+
+</div>
+
+     </div>
+</section>
+
+<footer>
+  © 2025 ZomaTaste — Spreading Taste Across India 🇮🇳
+</footer>
 </body>
 </html>

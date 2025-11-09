@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZomaTaste — Candlelight Dinner Booking</title>
+  <style>
+    :root{
+      --brand:#e4002b;
+      --accent:#ff6b6b;
+      --bg: linear-gradient(135deg,#fff5f5,#ffecec);
+      --card:#fff;
+      --muted:#666;
+      --radius:14px;
+      --shadow: 0 10px 30px rgba(15,15,20,0.06);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Poppins", system-ui, Arial;
+      background: var(--bg);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px 28px;
+      background:rgba(255,255,255,0.96);
+      box-shadow:0 2px 8px rgba(0,0,0,0.06);
+      position:sticky;
+      top:0;
+      z-index:40;
+    }
+
+    .logo{color:var(--brand);font-weight:800;font-size:18px}
+    nav a{margin-left:16px;text-decoration:none;color:#333;font-weight:600}
+    nav a:hover{color:var(--brand)}
+
+    .hero{
+      max-width:1100px;
+      margin:30px auto 10px;
+      padding:28px;
+      border-radius:16px;
+      background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,240,240,0.95));
+      box-shadow:var(--shadow);
+      display:flex;
+      gap:24px;
+      align-items:center;
+      overflow:hidden;
+    }
+
+    .hero .left{
+      flex:1;
+    }
+    .hero h1{color:var(--brand);margin:0 0 6px;font-size:26px}
+    .hero p{margin:0;color:var(--muted)}
+    .hero .hero-img{
+      width:320px;height:200px;border-radius:12px;overflow:hidden;flex-shrink:0;
+      box-shadow:0 8px 30px rgba(228,0,43,0.12);
+    }
+    .hero .hero-img img{width:100%;height:100%;object-fit:cover;display:block}
+
+    main{max-width:1100px;margin:20px auto;padding:0 18px}
+
+    .card{
+      background:var(--card);
+      border-radius:12px;
+      box-shadow:var(--shadow);
+      padding:20px;
+      margin-bottom:22px;
+      animation:pop 0.6s ease;
+    }
+
+    form .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    label{display:block;font-weight:600;margin-bottom:6px;color:#333}
+    input[type="text"], input[type="email"], input[type="tel"],
+    input[type="datetime-local"], select, textarea, input[type="date"], input[type="time"]{
+      width:100%;padding:10px;border-radius:10px;border:1px solid #eee;font-size:14px;background:#fff;
+      transition: box-shadow .18s, border-color .18s;
+    }
+    textarea{min-height:100px;resize:vertical}
+    input:focus, textarea:focus, select:focus{
+      outline:none;border-color:var(--brand);
+      box-shadow:0 6px 18px rgba(228,0,43,0.12);
+    }
+
+    .muted{color:var(--muted);font-size:13px;margin-top:6px}
+
+    .form-row{margin-bottom:12px}
+    .full{grid-column:1/-1}
+    .actions{display:flex;gap:12px;align-items:center;margin-top:8px}
+    .btn{padding:12px 18px;border-radius:12px;border:none;font-weight:700;cursor:pointer}
+    .btn-primary{background:linear-gradient(135deg,var(--brand),var(--accent));color:#fff;box-shadow:0 8px 20px rgba(228,0,43,0.18)}
+    .btn-ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);color:#333}
+
+    .note{font-size:13px;color:var(--muted);margin-top:8px}
+
+    /* small booking list */
+    .bookings-list{margin-top:12px}
+    .booking-item{padding:12px;border-radius:10px;background:#fff7f7;border-left:4px solid var(--brand);display:flex;justify-content:space-between;gap:12px;margin-bottom:10px}
+    .booking-item .left{max-width:70%}
+    .booking-meta{font-size:13px;color:#666;margin-top:6px}
+
+    /* modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.55);display:none;align-items:center;justify-content:center;z-index:90}
+    .modal{background:#fff;padding:20px;border-radius:12px;max-width:520px;width:95%;box-shadow:0 20px 60px rgba(0,0,0,0.45)}
+    .modal h3{margin:0;color:var(--brand)}
+    .modal p{color:#444;margin-top:8px}
+    .modal .row{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
+
+    /* small responsive */
+    @media (max-width:900px){
+      .hero{flex-direction:column;align-items:flex-start}
+      .hero .hero-img{width:100%;height:180px}
+      .grid{grid-template-columns:1fr}
+    }
+
+    @keyframes pop{from{opacity:0;transform:translateY(8px) scale(.995)}to{opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">ZT | ZomaTaste</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="ourservice.html">Services</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate food  for homes.html">Donate</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="left">
+      <h1>Candlelight Dinner Booking</h1>
+      <p>Reserve a romantic candlelight dinner at ZomaTaste — intimate table, soft music, and a specially curated menu for two.</p>
+      <div class="muted">Select date & time, choose preferences, and we'll confirm ASAP.</div>
+    </div>
+    <div class="hero-img">
+      <!-- replace with your own image file if desired -->
+      <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=1200&q=80" alt="candlelight dinner">
+    </div>
+  </div>
+
+  <main>
+    <div class="card">
+      <form id="bookingForm" autocomplete="off">
+        <div class="grid">
+          <div>
+            <label for="name">Full Name *</label>
+            <input id="name" type="text" placeholder="Your full name" required>
+          </div>
+          <div>
+            <label for="phone">Phone *</label>
+            <input id="phone" type="tel" placeholder="10-digit phone" pattern="[0-9]{10}" required>
+          </div>
+
+          <div>
+            <label for="email">Email *</label>
+            <input id="email" type="email" placeholder="you@example.com" required>
+          </div>
+
+          <div>
+            <label for="party">Party Size *</label>
+            <select id="party" required>
+              <option value="2">2 (Couple)</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="date">Date *</label>
+            <input id="date" type="date" required>
+          </div>
+
+          <div>
+            <label for="time">Time *</label>
+            <input id="time" type="time" required>
+          </div>
+
+          <div class="full">
+            <label for="seating">Seating Preference</label>
+            <select id="seating">
+              <option value="romantic-window">Window (Romantic view)</option>
+              <option value="center">Center (classic)</option>
+              <option value="private-nook">Private nook</option>
+              <option value="outdoor">Outdoor (if available)</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label for="requests">Special Requests (allergies, occasion, cake, music)</label>
+            <textarea id="requests" placeholder="E.g., Anniversary — please arrange a small cake"></textarea>
+          </div>
+
+          <div>
+            <label for="promo">Promo Code</label>
+            <input id="promo" type="text" placeholder="Enter promo code (if any)">
+          </div>
+
+          <div>
+            <label for="payment">Payment option</label>
+            <select id="payment">
+              <option value="pay-at-restaurant">Pay at restaurant</option>
+              <option value="prepay-card">Prepay by card (simulated)</option>
+              <option value="gpay">Google Pay / UPI (scan at restaurant)</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label><input id="agree" type="checkbox" required> I confirm details are correct and agree to the booking policy *</label>
+            <div class="muted">Bookings are subject to confirmation by the restaurant. We will contact you to confirm within 2 hours.</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn btn-primary">Request Reservation</button>
+          <button type="button" id="clearBtn" class="btn btn-ghost">Clear</button>
+          <div style="margin-left:auto" class="note">Need help? Call us at <strong>+91 98765 43210</strong></div>
+        </div>
+      </form>
+
+      <div class="muted note">Below are recent local bookings (saved in your browser for demo):</div>
+      <div id="bookings" class="bookings-list" aria-live="polite"></div>
+    </div>
+  </main>
+
+  <!-- modal -->
+  <div id="modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <h3 id="modalTitle">Booking Received</h3>
+      <p id="modalBody">We have received your booking request. A staff member will call to confirm shortly.</p>
+      <div class="row">
+        <button id="downloadIcs" class="btn btn-ghost">Download .ics</button>
+        <button id="modalClose" class="btn btn-primary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Helper - format date/time to readable
+    function formatDateTime(dateStr, timeStr) {
+      const [y,m,d] = dateStr.split('-').map(Number);
+      const [hh,mm] = timeStr.split(':').map(Number);
+      const dt = new Date(y, m-1, d, hh, mm);
+      return dt.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+    }
+
+    // Ensure date input cannot pick past days (local timezone)
+    const dateInput = document.getElementById('date');
+    const today = new Date();
+    const tzOffset = today.getTimezoneOffset() * 60000;
+    const localISODate = (new Date(Date.now() - tzOffset)).toISOString().split('T')[0];
+    dateInput.min = localISODate;
+
+    // form handling
+    const form = document.getElementById('bookingForm');
+    const bookingsEl = document.getElementById('bookings');
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalClose = document.getElementById('modalClose');
+    const downloadIcsBtn = document.getElementById('downloadIcs');
+    const clearBtn = document.getElementById('clearBtn');
+
+    // load existing bookings from localStorage
+    function loadBookings() {
+      const arr = JSON.parse(localStorage.getItem('zt_candle_bookings') || '[]');
+      bookingsEl.innerHTML = '';
+      if (!arr.length) {
+        bookingsEl.innerHTML = '<div class="muted" style="padding:12px">No saved bookings yet.</div>';
+        return;
+      }
+      arr.forEach(b => {
+        const node = document.createElement('div');
+        node.className = 'booking-item';
+        node.innerHTML = `<div class="left">
+            <strong>${b.name} — ${b.party} people</strong>
+            <div class="booking-meta">${formatDateTime(b.date,b.time)} • ${b.seating}</div>
+            <div class="muted" style="margin-top:6px">${b.requests ? (b.requests.length>90?b.requests.slice(0,90)+'…':b.requests) : '—'}</div>
+          </div>
+          <div class="right">
+            <div style="text-align:right"><small>${b.phone}</small></div>
+            <div style="margin-top:10px">
+              <button class="btn btn-ghost" onclick="cancelBooking('${b.id}')">Cancel</button>
+            </div>
+          </div>`;
+        bookingsEl.appendChild(node);
+      });
+    }
+
+    function saveBooking(booking){
+      const arr = JSON.parse(localStorage.getItem('zt_candle_bookings') || '[]');
+      arr.unshift(booking);
+      localStorage.setItem('zt_candle_bookings', JSON.stringify(arr));
+      loadBookings();
+    }
+
+    function cancelBooking(id){
+      if (!confirm('Cancel this booking?')) return;
+      let arr = JSON.parse(localStorage.getItem('zt_candle_bookings') || '[]');
+      arr = arr.filter(b => b.id !== id);
+      localStorage.setItem('zt_candle_bookings', JSON.stringify(arr));
+      loadBookings();
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      // read
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const party = document.getElementById('party').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const seating = document.getElementById('seating').value;
+      const requests = document.getElementById('requests').value.trim();
+      const promo = document.getElementById('promo').value.trim();
+      const payment = document.getElementById('payment').value;
+      const agree = document.getElementById('agree').checked;
+
+      // validation
+      if (!name || !phone || !email || !party || !date || !time || !agree) {
+        alert('Please fill required fields.');
+        return;
+      }
+      // phone basic check
+      if (!/^\d{10}$/.test(phone)) {
+        alert('Please enter a valid 10-digit phone number.');
+        return;
+      }
+      // date/time not past
+      const bookingDt = new Date(date + 'T' + time);
+      if (bookingDt < new Date()) {
+        alert('Please select a future date and time.');
+        return;
+      }
+
+      // success
+      const booking = {
+        id: 'b' + Date.now(),
+        name, phone, email, party, date, time, seating, requests, promo, payment,
+        createdAt: new Date().toISOString()
+      };
+      saveBooking(booking);
+
+      // show modal with details and ICS option
+      modalTitle.textContent = 'Booking Requested';
+      modalBody.innerHTML = `<strong>${name}</strong><br> ${formatDateTime(date,time)} • ${party} people • ${seating}<br><small class="muted">We will contact ${phone} to confirm. A confirmation message will be emailed to ${email}.</small>`;
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden', 'false');
+
+      // attach ICS data to download button
+      const ics = generateICS(booking);
+      downloadIcsBtn.onclick = () => {
+        downloadFile(ics.blob, ics.filename, ics.mime);
+      };
+
+      // optional: reset form but keep name/phone maybe; here we clear all for demo
+      form.reset();
+      dateInput.min = localISODate; // reapply
+    });
+
+    clearBtn.addEventListener('click', () => {
+      if (confirm('Clear the form?')) form.reset();
+    });
+
+    modalClose.addEventListener('click', () => {
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+    });
+
+    // generate simple ICS file for the booking (basic fields)
+    function generateICS(b){
+      // convert booking date/time -> UTC string for ICS start/end (2-hour dinner default)
+      const [y,m,d] = b.date.split('-').map(Number);
+      const [hh,mm] = b.time.split(':').map(Number);
+      const start = new Date(y, m-1, d, hh, mm);
+      const end = new Date(start.getTime() + 2 * 60 * 60 * 1000); // +2 hours
+      function toICS(dt){
+        // ICS wants UTC in format YYYYMMDDTHHMMSSZ
+        return dt.toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z';
+      }
+      const uid = b.id + '@zomataste.example';
+      const dtstamp = toICS(new Date());
+      const dtstart = toICS(start);
+      const dtend = toICS(end);
+      const summary = encodeText(`Candlelight Dinner — ${b.name}`);
+      const description = encodeText(`Reservation for ${b.name} (${b.phone}). Requests: ${b.requests || '—'}`);
+      const location = encodeText('ZomaTaste Restaurant — (Nearest outlet)');
+
+      const icsLines = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//ZomaTaste//EN',
+        'CALSCALE:GREGORIAN',
+        'BEGIN:VEVENT',
+        `UID:${uid}`,
+        `DTSTAMP:${dtstamp}`,
+        `DTSTART:${dtstart}`,
+        `DTEND:${dtend}`,
+        `SUMMARY:${summary}`,
+        `DESCRIPTION:${description}`,
+        `LOCATION:${location}`,
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ];
+      const icsContent = icsLines.join('\r\n');
+      const blob = new Blob([icsContent], {type: 'text/calendar;charset=utf-8'});
+      return { blob, filename: `ZomaTaste_Booking_${b.id}.ics`, mime: 'text/calendar' };
+    }
+
+    function encodeText(s){
+      return (s||'').replace(/\n/g,'\\n').replace(/,/g,'\\,');
+    }
+
+    function downloadFile(blob, filename, mime){
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url), 5000);
+    }
+
+    // init
+    loadBookings();
+
+    // expose cancelBooking for inline onclick in generated booking items
+    window.cancelBooking = cancelBooking;
+  </script>
+</body>
+</html>

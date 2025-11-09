@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZomaTaste | Live Driver Tracker (Realistic Demo)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+  :root {
+    --brand:#e63946;
+    --accent:#ff6b6b;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,#fff6f6,#ffecec);
+    color:#222;
+  }
+  header{
+    background:#fff;
+    padding:15px 30px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    display:flex;align-items:center;justify-content:space-between;
+    position:sticky;top:0;z-index:10;
+  }
+  header h1{color:var(--brand);margin:0;font-weight:800;}
+  nav a{
+    text-decoration:none;
+    color:#333;
+    font-weight:600;
+    margin-left:18px;
+    transition:0.3s;
+  }
+  nav a:hover{color:var(--brand);}
+  #map{
+    height:75vh;
+    width:90%;
+    margin:25px auto;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.15);
+  }
+  .info{
+    width:90%;
+    margin:0 auto 25px;
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+    padding:18px 22px;
+  }
+  .info h2{margin-top:0;color:var(--brand);}
+  .stat{
+    display:flex;justify-content:space-between;
+    font-weight:600;
+    padding:6px 0;border-bottom:1px solid #eee;
+  }
+  .controls{
+    margin-top:14px;
+    display:flex;gap:10px;flex-wrap:wrap;
+  }
+  button{
+    padding:10px 14px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
+    transition:0.3s;
+  }
+  .start{background:linear-gradient(135deg,var(--brand),var(--accent));color:#fff;}
+  .pause{background:#fff;border:2px solid var(--brand);color:var(--brand);}
+  button:hover{transform:scale(1.05);}
+  footer{
+    text-align:center;
+    color:#777;
+    padding:15px;
+  }
+  @keyframes pulse {
+    0% { box-shadow:0 0 0 0 rgba(230,57,70,0.4);}
+    70%{ box-shadow:0 0 0 15px rgba(230,57,70,0);}
+    100%{ box-shadow:0 0 0 0 rgba(230,57,70,0);}
+  }
+  .pulse{
+    animation:pulse 2s infinite;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ZT | ZomaTaste</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="ourservice.html">Services</a>
+    <a href="donate food for homes.html">Donate</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<div id="map"></div>
+
+<div class="info">
+  <h2>Driver Live Simulation 🚗</h2>
+  <div class="stat"><span>Driver:</span><span id="driverName">Ravi Kumar</span></div>
+  <div class="stat"><span>Speed:</span><span id="speed">—</span></div>
+  <div class="stat"><span>Distance Remaining:</span><span id="distance">—</span></div>
+  <div class="stat"><span>Estimated Arrival:</span><span id="eta">—</span></div>
+  <div class="controls">
+    <button id="startBtn" class="start">▶ Start Simulation</button>
+    <button id="pauseBtn" class="pause" disabled>⏸ Pause</button>
+    <button id="resetBtn" class="pause" disabled>🔄 Reset</button>
+  </div>
+</div>
+
+<footer>© 2025 ZomaTaste — Realistic Driver Demo</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const map = L.map('map').setView([12.9716,77.5946],13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
+
+  const driverIcon = L.divIcon({
+    html:`<div style="width:46px;height:46px;display:flex;align-items:center;justify-content:center;">
+      <svg id="driverArrow" width="42" height="42" viewBox="0 0 24 24">
+      <path d="M12 2C8 2 5 5 5 9c0 7 7 13 7 13s7-6 7-13c0-4-3-7-7-7z" fill="#e63946" stroke="#fff" stroke-width="1"/>
+      <circle cx="12" cy="9" r="2.2" fill="#fff"/>
+      </svg></div>`,
+    iconSize:[46,46],
+    iconAnchor:[23,23],
+    className:'pulse'
+  });
+
+  const route = [
+    [12.9716,77.5946,90],
+    [12.9725,77.5958,100],
+    [12.9733,77.5970,110],
+    [12.9740,77.5982,120],
+    [12.9750,77.5994,130],
+    [12.9760,77.6006,140],
+    [12.9770,77.6018,160],
+    [12.9780,77.6025,170],
+    [12.9786,77.6031,175],
+    [12.9792,77.6040,180],
+    [12.9800,77.6050,185],
+    [12.9810,77.6060,190],
+    [12.9818,77.6069,200],
+    [12.9825,77.6078,210],
+    [12.9830,77.6085,220]
+  ];
+
+  const destination = [12.9830,77.6085];
+  const destMarker = L.marker(destination).addTo(map).bindPopup("Destination 🏠");
+
+  let driverMarker;
+  let i=0;
+  let timer=null;
+  let moving=false;
+
+  const speedDisplay=document.getElementById('speed');
+  const distDisplay=document.getElementById('distance');
+  const etaDisplay=document.getElementById('eta');
+  const startBtn=document.getElementById('startBtn');
+  const pauseBtn=document.getElementById('pauseBtn');
+  const resetBtn=document.getElementById('resetBtn');
+
+  function distanceMeters(lat1,lon1,lat2,lon2){
+    const R=6371e3,toRad=v=>v*Math.PI/180;
+    const φ1=toRad(lat1),φ2=toRad(lat2);
+    const Δφ=toRad(lat2-lat1),Δλ=toRad(lon2-lon1);
+    const a=Math.sin(Δφ/2)**2+Math.cos(φ1)*Math.cos(φ2)*Math.sin(Δλ/2)**2;
+    return R*(2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));
+  }
+
+  function updateStats(lat,lng,speed){
+    const dist=distanceMeters(lat,lng,destination[0],destination[1]);
+    const eta=dist>0?(dist/(speed*1000/3600))/60:0;
+    distDisplay.textContent=dist>=1000?(dist/1000).toFixed(2)+' km':Math.round(dist)+' m';
+    etaDisplay.textContent=eta>0?Math.max(1,eta.toFixed(0))+' min':'Arrived';
+  }
+
+  function moveDriver(){
+    if(i>=route.length){
+      clearInterval(timer);
+      moving=false;
+      alert("✅ Driver reached the destination!");
+      return;
+    }
+    const [lat,lng,angle]=route[i];
+    const randomSpeed=Math.floor(25+Math.random()*30); // realistic 25–55 km/h
+    if(!driverMarker){
+      driverMarker=L.marker([lat,lng],{icon:driverIcon}).addTo(map);
+    } else {
+      driverMarker.setLatLng([lat,lng]);
+      document.getElementById("driverArrow").style.transform=`rotate(${angle}deg)`;
+    }
+    speedDisplay.textContent=randomSpeed+" km/h";
+    updateStats(lat,lng,randomSpeed);
+    map.panTo([lat,lng]);
+    i++;
+  }
+
+  startBtn.onclick=()=>{
+    if(moving)return;
+    moving=true;
+    startBtn.disabled=true;
+    pauseBtn.disabled=false;
+    resetBtn.disabled=false;
+    timer=setInterval(moveDriver,1500);
+  };
+
+  pauseBtn.onclick=()=>{
+    clearInterval(timer);
+    moving=false;
+    startBtn.disabled=false;
+    pauseBtn.disabled=true;
+  };
+
+  resetBtn.onclick=()=>{
+    clearInterval(timer);
+    moving=false;
+    i=0;
+    startBtn.disabled=false;
+    pauseBtn.disabled=true;
+    resetBtn.disabled=true;
+    if(driverMarker){driverMarker.remove();driverMarker=null;}
+    speedDisplay.textContent="—";
+    distDisplay.textContent="—";
+    etaDisplay.textContent="—";
+    map.setView(route[0].slice(0,2),13);
+  };
+</script>
+</body>
+</html>

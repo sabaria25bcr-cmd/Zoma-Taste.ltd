@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZomaTaste | Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #fff5f5, #ffecec);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(230, 57, 70, 0.15);
+      width: 90%;
+      max-width: 400px;
+      padding: 40px;
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+
+    h2 {
+      color: #e63946;
+      margin-bottom: 10px;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    p {
+      color: #666;
+      font-size: 15px;
+      margin-bottom: 30px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+      margin-bottom: 15px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #e63946;
+      box-shadow: 0 0 8px rgba(230, 57, 70, 0.2);
+      outline: none;
+    }
+
+    .login-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #ff4b4b, #ff7676);
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 5px;
+      box-shadow: 0 4px 12px rgba(255, 75, 75, 0.3);
+    }
+
+    .login-btn:hover {
+      background: linear-gradient(135deg, #e63946, #ff4b4b);
+      transform: scale(1.05);
+    }
+
+    .divider {
+      margin: 20px 0;
+      position: relative;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: #ddd;
+    }
+
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+
+    .google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #fff;
+      border: 2px solid #ddd;
+      border-radius: 30px;
+      padding: 10px;
+      width: 100%;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 600;
+      font-size: 15px;
+      color: #555;
+    }
+
+    .google-btn:hover {
+      border-color: #e63946;
+      color: #e63946;
+      box-shadow: 0 0 8px rgba(230, 57, 70, 0.15);
+      transform: scale(1.03);
+    }
+
+    .google-btn img {
+      width: 22px;
+      height: 22px;
+    }
+
+    .switch-link {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .switch-link a {
+      color: #e63946;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .switch-link a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 15px;
+      text-align: center;
+      width: 100%;
+      font-size: 13px;
+      color: #888;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>Welcome to ZomaTaste 🍽️</h2>
+    <p>Login to continue your delicious journey!</p>
+
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email address" required />
+      <input type="tel" id="phone" placeholder="Phone number" maxlength="10" required />
+      <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <div class="divider">or</div>
+
+    <button class="google-btn" onclick="loginWithGoogle()">
+      <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google logo">
+      Login with Google
+    </button>
+
+    <div class="switch-link">
+      Don't have an account? <a href="signup.html">Sign up</a>
+    </div>
+  </div>
+
+  <footer>© 2025 ZomaTaste — Flavor Meets Simplicity 🌶️</footer>
+
+  <script>
+    const form = document.getElementById('loginForm');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      if (!email || !phone) {
+        alert('Please enter both email and phone number.');
+        return;
+      }
+
+      // Save user data (optional)
+      localStorage.setItem('zt_user_email', email);
+      localStorage.setItem('zt_user_phone', phone);
+
+      alert('✅ Login successful!');
+      // ✅ Navigate to home page after login
+      window.location.href = 'index.html';
+    });
+
+    function loginWithGoogle() {
+      alert('🔐 Logging in with Google...');
+      // Later you can integrate Google OAuth or Firebase
+      // ✅ Redirect to home page
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

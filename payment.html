@@ -141,13 +141,13 @@
     // ✅ Get checkout amount (from localStorage or default)
     let amount = localStorage.getItem("checkoutAmount") || 499.00;
     amount = parseFloat(amount).toFixed(2);
+    amountDisplay.textContent = `Amount: ₹${amount}`;
 
     optionGPay.addEventListener("click", () => {
       selected = "gpay";
       optionGPay.classList.add("selected");
       optionCOD.classList.remove("selected");
       gpaySection.style.display = "block";
-    
     });
 
     optionCOD.addEventListener("click", () => {
@@ -167,7 +167,8 @@
       payButton.textContent = "Processing...";
 
       setTimeout(() => {
-        window.location.href = "success.html";
+        // ✅ Navigate to OTP page for both methods
+        window.location.href = "otp.html";
       }, 2000);
     });
   </script>
